@@ -3,5 +3,6 @@ project(indexing-system CXX)
 
 include(cmake/definitions.cmake)
 include(cmake/dirs.cmake)
+include(cmake/libs.cmake)
 
 add_subdirectory(server)
