@@ -1,2 +1,4 @@
 # IntelliJ Idea
 .idea/
+
+cmake-build-*/
