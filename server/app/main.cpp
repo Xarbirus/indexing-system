@@ -4,7 +4,7 @@ int main(int /*argc*/, char** /*argv[]*/)
 {
   try
   {
-    logger::reset("server.log", 1'000'000, 10);
+    logger::reset("server.log", 1'000'000, 10, logger::levels::extended);
   }
   catch(const std::exception& e)
   {

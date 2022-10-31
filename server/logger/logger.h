@@ -1,5 +1,7 @@
 #pragma once
 
+#include "logger/logger_levels.h"
+
 #include <spdlog/spdlog.h>
 
 #define LOG_ERROR(msg, ...) \
@@ -14,5 +16,5 @@
 
 namespace logger
 {
-  void reset(const char* path, std::size_t log_size, std::size_t rotate_count);
+  void reset(const char* path, std::size_t log_size, std::size_t rotate_count, levels level);
 }

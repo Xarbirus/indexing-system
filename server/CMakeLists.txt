@@ -7,7 +7,8 @@ add_executable(${target_name}
   app/main.cpp
 
   logger/logger.cpp
-  logger/logger.h)
+  logger/logger.h
+  logger/logger_levels.h)
 
 target_link_libraries(${target_name}
   fmt::fmt
