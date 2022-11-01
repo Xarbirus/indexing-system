@@ -1,3 +1,5 @@
-include(cmake/utils/find_conan_packages.cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 
-find_conan_packages(fmt spdlog)
+find_package(fmt)
+find_package(spdlog)
+find_package(GTest)
