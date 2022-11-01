@@ -1,10 +1,14 @@
 #include "logger/logger.h"
+#include "logger/logger_defines.h"
 
 int main(int /*argc*/, char** /*argv[]*/)
 {
   try
   {
-    logger::reset("server.log", 1'000'000, 10, logger::levels::extended);
+    logger::reset(logger::default_log_path,
+                  logger::default_log_size,
+                  logger::default_log_files,
+                  logger::default_log_level);
   }
   catch(const std::exception& e)
   {
