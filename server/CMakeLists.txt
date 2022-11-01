@@ -9,7 +9,9 @@ add_executable(${target_name}
   logger/logger.cpp
   logger/logger.h
   logger/logger_defines.h
-  logger/logger_levels.h)
+  logger/logger_levels.h
+  logger/details/format_pattern.cpp
+  logger/details/format_pattern.h)
 
 target_link_libraries(${target_name}
   fmt::fmt

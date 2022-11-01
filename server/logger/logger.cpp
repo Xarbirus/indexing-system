@@ -1,4 +1,5 @@
 #include "logger/logger.h"
+#include "logger/details/format_pattern.h"
 
 #include <spdlog/sinks/rotating_file_sink.h>
 
@@ -22,6 +23,7 @@ namespace logger
   {
     spdlog::set_default_logger(spdlog::rotating_logger_mt("default", path, log_size, rotate_count));
     auto logger = spdlog::default_logger();
+    details::format_pattern::apply(*logger);
     logger->set_level(to_spdlog_level(level));
     logger->flush_on(spdlog::level::level_enum::debug);
   }
