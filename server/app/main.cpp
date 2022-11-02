@@ -1,3 +1,5 @@
+#include "service_base.h"
+
 #include "logger/src/logger.h"
 #include "logger/src/logger_defines.h"
 
@@ -9,6 +11,8 @@ int main(int /*argc*/, char** /*argv[]*/)
                   logger::default_log_size,
                   logger::default_log_files,
                   logger::default_log_level);
+
+    service_base().run();
   }
   catch(const std::exception& ex)
   {
