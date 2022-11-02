@@ -33,16 +33,13 @@ namespace logger::details
 
   std::string_view format_pattern::get_short_filename(std::string_view filename)
   {
-    if(sizeof(spdlog::details::os::folder_seps) == 2)
-    {
-      auto rv = std::strrchr(filename.data(), spdlog::details::os::folder_seps[0]);
-      return rv != nullptr ? rv + 1 : filename;
-    }
-    else
-    {
-      const auto it = std::find_first_of(filename.rbegin(), filename.rend(), std::begin(spdlog::details::os::folder_seps), std::end(spdlog::details::os::folder_seps) - 1);
-      return it != filename.rend() ? it.base() : filename;
-    }
+#ifdef _WIN32
+    const auto it = std::find_first_of(filename.rbegin(), filename.rend(), std::begin(spdlog::details::os::folder_seps), std::end(spdlog::details::os::folder_seps) - 1);
+    return it != filename.rend() ? it.base() : filename;
+#else
+    auto rv = std::strrchr(filename.data(), spdlog::details::os::folder_seps[0]);
+    return rv != nullptr ? rv + 1 : filename;
+#endif
   }
 
   std::string_view format_pattern::get_pretty_function_name(std::string_view pretty_name)

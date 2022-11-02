@@ -17,7 +17,7 @@ int main(int /*argc*/, char** /*argv[]*/)
   }
   catch(...)
   {
-    LOG_ERROR("server caught an unknown exception...");
+    LOG_ERROR("server caught an unknown exception");
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
