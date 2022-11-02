@@ -15,6 +15,7 @@ public:
 
 private:
   virtual void initialize() {}
+
   virtual void finalize() {}
 
   using signal_handler = std::function<void()>;

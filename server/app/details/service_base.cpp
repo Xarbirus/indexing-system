@@ -1,8 +1,9 @@
-#include "service_base.h"
+#include "app/details/service_base.h"
 
 #include "logger/src/logger.h"
 
-service_base::service_base() : m_signals(m_io)
+service_base::service_base()
+  : m_signals(m_io)
 {
   init_default_signal_handlers();
   init_interruption_handlers();
