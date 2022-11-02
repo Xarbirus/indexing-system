@@ -1,5 +1,5 @@
-#include "logger/logger.h"
-#include "logger/details/format_pattern.h"
+#include "logger/src/logger.h"
+#include "logger/src/details/format_pattern.h"
 
 #include <spdlog/sinks/rotating_file_sink.h>
 

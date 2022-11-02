@@ -1,5 +1,5 @@
-#include "logger/logger.h"
-#include "logger/logger_defines.h"
+#include "logger/src/logger.h"
+#include "logger/src/logger_defines.h"
 
 int main(int /*argc*/, char** /*argv[]*/)
 {
@@ -10,12 +10,14 @@ int main(int /*argc*/, char** /*argv[]*/)
                   logger::default_log_files,
                   logger::default_log_level);
   }
-  catch(const std::exception& e)
+  catch(const std::exception& ex)
   {
+    LOG_ERROR("server caught an exception: {}", ex.what());
     return EXIT_FAILURE;
   }
   catch(...)
   {
+    LOG_ERROR("server caught an unknown exception...");
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
