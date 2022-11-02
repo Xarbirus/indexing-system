@@ -34,7 +34,10 @@ namespace logger::details
   std::string_view format_pattern::get_short_filename(std::string_view filename)
   {
 #ifdef _WIN32
-    const auto it = std::find_first_of(filename.rbegin(), filename.rend(), std::begin(spdlog::details::os::folder_seps), std::end(spdlog::details::os::folder_seps) - 1);
+    const auto it = std::find_first_of(filename.rbegin(),
+                                       filename.rend(),
+                                       std::begin(spdlog::details::os::folder_seps),
+                                       std::end(spdlog::details::os::folder_seps) - 1);
     return it != filename.rend() ? it.base() : filename;
 #else
     auto rv = std::strrchr(filename.data(), spdlog::details::os::folder_seps[0]);
@@ -56,8 +59,8 @@ namespace logger::details
       angle = pretty_name.find('<', end);
       round = pretty_name.find('(', end);
     }
-    pretty_name.remove_suffix(pretty_name.size() - round);  //cut args
-    pretty_name.remove_prefix(pretty_name.rfind(' ') + 1);  //cut return type
+    pretty_name.remove_suffix(pretty_name.size() - round);              //cut args
+    pretty_name.remove_prefix(pretty_name.rfind(' ') + 1);              //cut return type
     auto begin = pretty_name.rfind("::", pretty_name.rfind("::") - 1);  //cut extra namespaces
     return begin == std::string::npos ? pretty_name : pretty_name.substr(begin + 2);
   }

@@ -65,7 +65,6 @@ ColumnLimit: 120
 
 CompactNamespaces: false
 ConstructorInitializerIndentWidth: 2
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ContinuationIndentWidth: 2
 Cpp11BracedListStyle: true
 DeriveLineEnding: false
@@ -90,7 +89,7 @@ LambdaBodyIndentation: Signature
 
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
-PackConstructorInitializers: CurrentLine
+PackConstructorInitializers: Never
 
 PointerAlignment: Left
 ReferenceAlignment: Pointer

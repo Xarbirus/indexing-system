@@ -16,7 +16,6 @@ protected:
   static constexpr auto master_value_template = " [foo.cpp:42:{}]";
 };
 
-
 TEST_F(template_function_tests, function_templates)
 {
   {
@@ -94,4 +93,3 @@ TEST_F(template_function_tests, class_templates)
     check(msg, fmt::format(master_value_template, function_name));
   }
 }
-
