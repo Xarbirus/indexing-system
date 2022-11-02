@@ -5,6 +5,8 @@
 service_base::service_base()
   : m_signals(m_io)
 {
+  LOG_INFO("Starting indexing service");
+
   init_default_signal_handlers();
   init_interruption_handlers();
 
@@ -16,25 +18,25 @@ void service_base::run()
   std::exception_ptr saved_exception;
   try
   {
-    LOG_INFO("Starting indexing service");
+    LOG_INFO("Run indexing service");
     initialize();
 
     m_io.run();  // blocks
   }
   catch(const std::exception& ex)
   {
-    LOG_ERROR("indexing service failed to run: {}", ex.what());
+    LOG_ERROR("Indexing service failed to run: {}", ex.what());
     saved_exception = std::current_exception();
   }
 
   try
   {
     finalize();
-    LOG_INFO("indexing service event loop finished");
+    LOG_INFO("Indexing service event loop finished");
   }
   catch(const std::exception& ex)
   {
-    LOG_ERROR("indexing service failed to finalize: {}", ex.what());
+    LOG_ERROR("Indexing service failed to finalize: {}", ex.what());
     saved_exception = std::current_exception();
   }
 
@@ -59,7 +61,7 @@ service_base::signal_handler service_base::get_interruption_handler()
 {
   return [this]
   {
-    LOG_DEBUG("indexing service: termination requested");
+    LOG_DEBUG("Indexing service: termination requested");
     m_io.stop();
   };
 }

@@ -4,7 +4,10 @@ service::service()
   : m_tasks{get_number_of_tasks()}
 {}
 
-void service::initialize() {}
+void service::initialize()
+{
+  m_tasks.add_task([&]{ m_input.run(); });
+}
 
 void service::finalize() {}
 
