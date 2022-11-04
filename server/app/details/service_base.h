@@ -12,6 +12,7 @@ public:
   virtual ~service_base() = default;
 
   void run();
+  void stop();
 
 private:
   virtual void initialize() {}

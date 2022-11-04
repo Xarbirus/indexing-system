@@ -5,6 +5,8 @@ add_executable(${target_name}
   service.cpp
   service.h
 
+  details/engine.cpp
+  details/engine.h
   details/input_processor.cpp
   details/input_processor.h
   details/task_dispatcher.cpp

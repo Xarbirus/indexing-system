@@ -3,7 +3,7 @@
 #include "logger/src/logger.h"
 
 service_base::service_base()
-  : m_signals(m_io)
+  : m_signals{m_io}
 {
   LOG_INFO("Starting indexing service");
 
@@ -42,6 +42,11 @@ void service_base::run()
 
   if(saved_exception)
     std::rethrow_exception(saved_exception);
+}
+
+void service_base::stop()
+{
+  m_io.stop();
 }
 
 void service_base::set_signal_handler(int signal_number, signal_handler handler)
