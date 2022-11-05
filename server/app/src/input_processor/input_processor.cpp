@@ -1,7 +1,7 @@
 #include "app/src/input_processor/input_processor.h"
 
 #include "app/src/input_processor/prepare_command.h"
-#include "app/src/input_processor/prepare_filepath.h"
+#include "app/src/input_processor/command_processor/prepare_filepath.h"
 
 #include "logger/src/logger.h"
 
@@ -21,25 +21,21 @@ void input_processor::run() noexcept
     {
       try
       {
-        LOG_DEBUG("Input processor gets line '{}'", line);
-
-        if(line.empty())
-          continue;
-
+        LOG_DEBUG("Input processor gets line '{}'.", line);
         const auto [command, arguments] = prepare_command(line);
         m_commands.execute(command, arguments);
       }
       catch(const std::exception& ex)
       {
-        LOG_ERROR("Input processor caught an exception: {}, resuming", ex.what());
+        LOG_ERROR("Input processor caught an exception: {}, resuming.", ex.what());
       }
       catch(...)
       {
-        LOG_ERROR("Input processor caught an unknown exception, resuming");
+        LOG_ERROR("Input processor caught an unknown exception, resuming.");
       }
     }
 
-    LOG_ERROR("Input processor ended");
+    LOG_INFO("Input processor ended.");
   };
   std::thread(user_input).detach();
 }

@@ -10,13 +10,15 @@ add_executable(${TARGET_NAME}
   input_processor/input_processor.h
   input_processor/prepare_command.cpp
   input_processor/prepare_command.h
-  input_processor/prepare_filepath.cpp
-  input_processor/prepare_filepath.h
   input_processor/command_processor/command_processor.h
   input_processor/command_processor/index_processor.cpp
   input_processor/command_processor/index_processor.h
   input_processor/command_processor/help_processor.cpp
   input_processor/command_processor/help_processor.h
+  input_processor/command_processor/prepare_filepath.cpp
+  input_processor/command_processor/prepare_filepath.h
+  input_processor/command_processor/remove_processor.cpp
+  input_processor/command_processor/remove_processor.h
   input_processor/command_processor/quit_processor.cpp
   input_processor/command_processor/quit_processor.h
 
