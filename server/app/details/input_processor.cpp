@@ -1,9 +1,8 @@
 #include "app/details/input_processor.h"
 #include "app/details/engine.h"
+#include "app/details/prepare_command.h"
 
 #include "logger/src/logger.h"
-
-#include <boost/algorithm/string.hpp>
 
 #include <iostream>
 
@@ -20,6 +19,8 @@ void input_processor::run() noexcept
   {
     try
     {
+      LOG_DEBUG("Input processor gets line '{}'", line);
+
       if(line.empty())
         continue;
 
@@ -41,27 +42,6 @@ void input_processor::run() noexcept
 void input_processor::stop()
 {
   std::cin.setstate(std::ios_base::eofbit);
-}
-
-std::vector<std::string> input_processor::prepare_command(std::string str)
-{
-  LOG_DEBUG("Input processor gets line '{}'", str);
-
-  static constexpr auto whitespaces = " \t\n\r\v\f";
-
-  boost::to_lower(str);
-  std::string_view trimmed{str};
-
-  trimmed.remove_prefix(std::min(trimmed.find_first_not_of(whitespaces), trimmed.size()));
-  if(auto suffix = trimmed.find_last_not_of(whitespaces); suffix != std::string::npos)
-    trimmed.remove_suffix(trimmed.size() - suffix - 1);
-
-  std::vector<std::string> args;
-  boost::split(args, trimmed, boost::is_any_of(whitespaces), boost::token_compress_on);
-
-  LOG_DEBUG("Input processor prepares command of {} elements", args.size());
-
-  return args;
 }
 
 void input_processor::process_command(const std::vector<std::string>& current_command)

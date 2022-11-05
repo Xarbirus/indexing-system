@@ -15,7 +15,6 @@ public:
   void stop();
 
 private:
-  static std::vector<std::string> prepare_command(std::string str);
   void process_command(const std::vector<std::string>& command);
 
   void help(const std::vector<std::string>& command);
