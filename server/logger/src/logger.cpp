@@ -19,7 +19,7 @@ namespace
 
 namespace logger
 {
-  void reset(const char* path, std::size_t log_size, std::size_t rotate_count, levels level)
+  void reset(const std::filesystem::path& path, std::size_t log_size, std::size_t rotate_count, levels level)
   {
     spdlog::set_default_logger(spdlog::rotating_logger_mt("default", path, log_size, rotate_count));
     auto logger = spdlog::default_logger();

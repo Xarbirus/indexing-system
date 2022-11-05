@@ -4,6 +4,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <filesystem>
+
 #define LOG_ERROR(msg, ...) \
   spdlog::log({__FILE__, __LINE__, __PRETTY_FUNCTION__}, spdlog::level::level_enum::err, msg, ##__VA_ARGS__)
 #define LOG_WARNING(msg, ...) \
@@ -16,5 +18,5 @@
 
 namespace logger
 {
-  void reset(const char* path, std::size_t log_size, std::size_t rotate_count, levels level);
+  void reset(const std::filesystem::path& path, std::size_t log_size, std::size_t rotate_count, levels level);
 }
