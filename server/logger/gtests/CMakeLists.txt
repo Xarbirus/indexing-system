@@ -14,3 +14,5 @@ target_link_libraries(${tests_name}
     GTest::gtest
     GTest::gtest_main
     logger)
+
+set_target_properties(${tests_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_TESTS_OUTPUT_DIRECTORY})
