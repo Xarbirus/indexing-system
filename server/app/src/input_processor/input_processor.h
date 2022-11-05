@@ -18,6 +18,7 @@ private:
   void process_command(const std::vector<std::string>& command);
 
   void help(const std::vector<std::string>& command);
+  void index(const std::vector<std::string>& command);
   void quit(const std::vector<std::string>& command);
 
   using command_processor = void(input_processor::*)(const std::vector<std::string>&);

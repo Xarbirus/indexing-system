@@ -2,14 +2,16 @@
 
 #include "app/src/engine/engine.h"
 #include "app/src/input_processor/prepare_command.h"
+#include "app/src/input_processor/prepare_filepath.h"
 
 #include "logger/src/logger.h"
 
 #include <iostream>
 
 input_processor::input_processor(engine& engine)
-  : m_commands{{"quit", {&input_processor::quit, "Use this command without arguments to stop the service."}},
-               {"help", {&input_processor::help, "Use this command without arguments to find out how does indexing system work."}}}
+  : m_commands{{"help", {&input_processor::help, "Use this command WITHOUT ARGUMENTS to find out how does indexing system work."}},
+               {"index", {&input_processor::index, "Use this command WITH ONE ARGUMENT (path to directory) to start indexing the directory."}},
+               {"quit", {&input_processor::quit, "Use this command WITHOUT ARGUMENTS to stop the service."}}}
   , m_engine{engine}
 {}
 
@@ -71,6 +73,17 @@ void input_processor::help(const std::vector<std::string>& current_command)
     else
       print_common_help();
   }
+}
+
+void input_processor::index(const std::vector<std::string>& current_command)
+{
+  if(current_command.size() == 2)
+  {
+    auto prepared_path = prepare_filepath(current_command[1]);
+    m_engine.add_root(prepared_path);
+  }
+  else
+    std::cout << m_commands.at("index").description << std::endl;
 }
 
 void input_processor::quit(const std::vector<std::string>&)
