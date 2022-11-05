@@ -19,7 +19,7 @@ public:
   template<typename Callable, typename R = std::invoke_result_t<Callable>>
   std::future<R> add_task(Callable&& task) const
   {
-    LOG_DEBUG("Adding task to dispatcher");
+    LOG_DEBUG("Adding task to dispatcher.");
     std::packaged_task<R()> package(std::forward<Callable>(task));
     auto result = package.get_future();
     boost::asio::post(m_work.get_executor(), std::move(package));

@@ -16,5 +16,5 @@ public:
 private:
   engine& m_engine;
 
-  static constexpr auto description = "Use this command WITHOUT ARGUMENTS to stop the service.";
+  static constexpr auto description = "Use 'quit' to stop the service.";
 };

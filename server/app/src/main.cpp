@@ -22,12 +22,12 @@ int main(int /*argc*/, char* argv[])
   }
   catch(const std::exception& ex)
   {
-    LOG_ERROR("server caught an exception: {}", ex.what());
+    LOG_ERROR("Server caught an exception: {}.", ex.what());
     return EXIT_FAILURE;
   }
   catch(...)
   {
-    LOG_ERROR("server caught an unknown exception");
+    LOG_ERROR("Server caught an unknown exception.");
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;

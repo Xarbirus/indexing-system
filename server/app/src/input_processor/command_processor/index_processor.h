@@ -16,5 +16,5 @@ public:
 private:
   engine& m_engine;
 
-  static constexpr auto description = "Use this command WITH ONE ARGUMENT (path to directory) to start indexing the directory.";
+  static constexpr auto description = "Use 'index <absolute_path_to_directory>' to start indexing the directory.";
 };
