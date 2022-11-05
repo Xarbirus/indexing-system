@@ -3,4 +3,4 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> prepare_command(std::string str);
+std::pair<std::string, std::string> prepare_command(std::string str);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "app/src/input_processor/commands_holder.h"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -15,20 +17,5 @@ public:
   void stop();
 
 private:
-  void process_command(const std::vector<std::string>& command);
-
-  void help(const std::vector<std::string>& command);
-  void index(const std::vector<std::string>& command);
-  void quit(const std::vector<std::string>& command);
-
-  using command_processor = void(input_processor::*)(const std::vector<std::string>&);
-  struct command_info
-  {
-    command_processor processor;
-    std::string description;
-  };
-
-  const std::map<std::string, command_info> m_commands;
-
-  engine& m_engine;
+  commands_holder m_commands;
 };

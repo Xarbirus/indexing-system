@@ -1,18 +1,16 @@
 #include "app/src/input_processor/prepare_command.h"
 
-#include "app/src/input_processor/string_processing.h"
-
 #include <boost/algorithm/string.hpp>
 
-std::vector<std::string> prepare_command(std::string str)
+std::pair<std::string, std::string> prepare_command(std::string str)
 {
+  constexpr auto whitespaces = " \t\n\r\v\f";
+
   boost::to_lower(str);
-  std::string_view processed{str};
+  boost::trim(str);
 
-  trim(processed);
+  const auto end = str.find_first_of(whitespaces);
+  const auto suffix = str.find_first_not_of(whitespaces, end);
 
-  std::vector<std::string> args;
-  boost::split(args, processed, boost::is_any_of(whitespaces), boost::token_compress_on);
-
-  return args;
+  return {str.substr(0, end), str.substr(suffix == std::string_view::npos ? str.size() : suffix)};
 }

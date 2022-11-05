@@ -8,7 +8,7 @@ service::service()
 
 void service::initialize()
 {
-  m_tasks.add_task([&]{ m_input.run(); });
+  m_input.run();
 }
 
 void service::finalize()
