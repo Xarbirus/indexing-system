@@ -13,6 +13,8 @@ add_executable(${TARGET_NAME}
   input_processor/string_processing.cpp
   input_processor/string_processing.h
 
+  misc/print_to_user.h
+
   service/service.cpp
   service/service.h
   service/service_base.cpp

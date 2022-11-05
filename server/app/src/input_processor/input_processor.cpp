@@ -3,6 +3,7 @@
 #include "app/src/engine/engine.h"
 #include "app/src/input_processor/prepare_command.h"
 #include "app/src/input_processor/prepare_filepath.h"
+#include "app/src/misc/print_to_user.h"
 
 #include "logger/src/logger.h"
 
@@ -59,9 +60,9 @@ void input_processor::help(const std::vector<std::string>& current_command)
 {
   auto print_common_help = [&]()
   {
-    std::cout << "Available commands:\n";
+    print_to_user("Available commands:");
     for(const auto& command : m_commands)
-      std::cout << '\t' << command.first << '\t' << command.second.description << std::endl;
+      print_to_user('\t', command.first, '\t', command.second.description);
   };
 
   if(current_command.size() != 2)
@@ -69,7 +70,7 @@ void input_processor::help(const std::vector<std::string>& current_command)
   else
   {
     if(auto it = m_commands.find(current_command[1]); it != m_commands.end())
-      std::cout << it->second.description << std::endl;
+      print_to_user(it->second.description);
     else
       print_common_help();
   }
@@ -83,7 +84,7 @@ void input_processor::index(const std::vector<std::string>& current_command)
     m_engine.add_root(prepared_path);
   }
   else
-    std::cout << m_commands.at("index").description << std::endl;
+    print_to_user(m_commands.at("index").description);
 }
 
 void input_processor::quit(const std::vector<std::string>&)
