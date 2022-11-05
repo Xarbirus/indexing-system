@@ -1,4 +1,4 @@
-#include "app/details/service_base.h"
+#include "app/src/service/service_base.h"
 
 #include "logger/src/logger.h"
 

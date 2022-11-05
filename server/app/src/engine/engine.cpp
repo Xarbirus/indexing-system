@@ -1,6 +1,6 @@
-#include "app/details/engine.h"
+#include "app/src/engine/engine.h"
 
-#include "app/service.h"
+#include "app/src/service/service.h"
 
 engine::engine(service& service)
   : m_service{service}

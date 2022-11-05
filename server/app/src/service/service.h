@@ -1,9 +1,9 @@
 #pragma once
 
-#include "app/details/engine.h"
-#include "app/details/input_processor.h"
-#include "app/details/service_base.h"
-#include "app/details/task_dispatcher.h"
+#include "app/src/engine/engine.h"
+#include "app/src/input_processor/input_processor.h"
+#include "app/src/service/service_base.h"
+#include "app/src/task_dispatcher/task_dispatcher.h"
 
 class service : public service_base
 {

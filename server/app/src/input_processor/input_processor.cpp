@@ -1,6 +1,7 @@
-#include "app/details/input_processor.h"
-#include "app/details/engine.h"
-#include "app/details/prepare_command.h"
+#include "app/src/input_processor/input_processor.h"
+
+#include "app/src/engine/engine.h"
+#include "app/src/input_processor/prepare_command.h"
 
 #include "logger/src/logger.h"
 

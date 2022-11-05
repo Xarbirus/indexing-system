@@ -1,4 +1,4 @@
-#include "prepare_command.h"
+#include "app/src/input_processor/prepare_command.h"
 
 #include <boost/algorithm/string.hpp>
 
