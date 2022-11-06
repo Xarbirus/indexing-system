@@ -11,7 +11,7 @@ index_processor::index_processor(engine& engine)
 
 void index_processor::execute(const std::string& arguments)
 {
-  const auto [path, suffix] = prepare_command(arguments);
+  const auto [path, suffix] = separate_first_word(arguments);
   if(!path.empty() and suffix.empty())
   {
     if(const auto prepared_path = prepare_filepath(path))

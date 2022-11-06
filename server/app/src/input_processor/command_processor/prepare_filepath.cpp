@@ -8,8 +8,8 @@ std::optional<std::filesystem::path> prepare_filepath(std::string path)
 {
   if(path[0] == '~')
   {
-    auto* home = getenv("HOME");
-    if(home or (home = getenv("USERPROFILE")))
+    auto* home = std::getenv("HOME");
+    if(home or (home = std::getenv("USERPROFILE")))
       path.replace(0, 1, home);
     else
     {

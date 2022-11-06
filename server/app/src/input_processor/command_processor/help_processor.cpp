@@ -9,7 +9,7 @@ help_processor::help_processor(const std::map<std::string, std::unique_ptr<comma
 
 void help_processor::execute(const std::string& arguments)
 {
-  const auto [command_to_help, _] = prepare_command(arguments);
+  const auto [command_to_help, _] = separate_first_word(arguments);
   if(auto it = m_commands.find(command_to_help); it != m_commands.end())
     print_to_user(it->second->get_description());
   else

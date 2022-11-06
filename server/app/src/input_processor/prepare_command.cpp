@@ -2,15 +2,22 @@
 
 #include <boost/algorithm/string.hpp>
 
-std::pair<std::string, std::string> prepare_command(std::string str)
+std::pair<std::string, std::string> separate_first_word(const std::string& str)
 {
   constexpr auto whitespaces = " \t\n\r\v\f";
-
-  boost::to_lower(str);
-  boost::trim(str);
 
   const auto end = str.find_first_of(whitespaces);
   const auto suffix = str.find_first_not_of(whitespaces, end);
 
   return {str.substr(0, end), str.substr(suffix == std::string_view::npos ? str.size() : suffix)};
+}
+
+std::pair<std::string, std::string> prepare_command(std::string str)
+{
+  boost::trim(str);
+
+  auto out = separate_first_word(str);
+  boost::to_lower(out.first);
+
+  return out;
 }
