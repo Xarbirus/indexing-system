@@ -1,8 +1,8 @@
 #include "app/src/service/service.h"
 
 service::service()
-  : m_engine{*this}
-  , m_tasks{get_number_of_tasks()}
+  : m_tasks{get_number_of_tasks()}
+  , m_engine{*this, m_index}
   , m_input{m_engine}
 {}
 

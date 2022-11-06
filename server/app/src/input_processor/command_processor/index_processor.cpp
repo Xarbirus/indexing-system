@@ -15,7 +15,7 @@ void index_processor::execute(const std::string& arguments)
   if(!path.empty() and suffix.empty())
   {
     if(const auto prepared_path = prepare_filepath(path))
-      m_engine.add_root(*prepared_path);
+      m_engine.add_root(*prepared_path, path);
   }
   else
     print_to_user(description);

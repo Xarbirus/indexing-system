@@ -2,6 +2,7 @@
 
 #include "app/src/input_processor/prepare_command.h"
 #include "app/src/input_processor/command_processor/prepare_filepath.h"
+#include "app/src/misc/print_to_user.h"
 
 #include "logger/src/logger.h"
 
@@ -27,10 +28,12 @@ void input_processor::run() noexcept
       }
       catch(const std::exception& ex)
       {
+        print_to_user("ERROR: {}.", ex.what());
         LOG_ERROR("Input processor caught an exception: {}, resuming.", ex.what());
       }
       catch(...)
       {
+        print_to_user("ERROR: unexpected problem.");
         LOG_ERROR("Input processor caught an unknown exception, resuming.");
       }
     }

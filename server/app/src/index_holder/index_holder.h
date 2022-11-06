@@ -1,21 +1,16 @@
 #pragma once
 
-#include <filesystem>
+#include "app/src/index_holder/root_index.h"
 
-class index_holder;
-class service;
+#include <shared_mutex>
 
-class engine
+class index_holder
 {
 public:
-  engine(service& service, index_holder& index);
-
-  void stop_service();
-
   void add_root(const std::filesystem::path& root, const std::string& original_root);
   void remove_root(const std::filesystem::path& root, const std::string& original_root);
 
 private:
-  service& m_service;
-  index_holder& m_index;
+  std::shared_mutex m_mutex;
+  std::list<root_index> m_roots;
 };

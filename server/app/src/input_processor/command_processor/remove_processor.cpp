@@ -15,7 +15,10 @@ void remove_processor::execute(const std::string& arguments)
   if(!path.empty() and suffix.empty())
   {
     if(const auto prepared_path = prepare_filepath(path))
-      m_engine.remove_root(*prepared_path);
+    {
+      m_engine.remove_root(*prepared_path, path);
+      print_to_user("Operation completed.");
+    }
   }
   else
     print_to_user(description);

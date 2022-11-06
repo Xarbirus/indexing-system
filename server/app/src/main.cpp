@@ -8,7 +8,6 @@ void set_logger(char* app_path)
 {
   std::filesystem::path logs_path{app_path};
   logs_path.replace_filename(logger::default_log_name);
-
   logger::reset(logs_path, logger::default_log_size, logger::default_log_files, logger::default_log_level);
 }
 
@@ -16,6 +15,8 @@ int main(int /*argc*/, char* argv[])
 {
   try
   {
+    std::locale::global(std::locale(""));
+
     set_logger(argv[0]);
 
     service().run();

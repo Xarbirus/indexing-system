@@ -4,6 +4,11 @@ add_executable(${TARGET_NAME}
   engine/engine.cpp
   engine/engine.h
 
+  index_holder/index_holder.cpp
+  index_holder/index_holder.h
+  index_holder/root_index.cpp
+  index_holder/root_index.h
+
   input_processor/commands_holder.cpp
   input_processor/commands_holder.h
   input_processor/input_processor.cpp
