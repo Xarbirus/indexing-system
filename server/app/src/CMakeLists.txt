@@ -31,6 +31,8 @@ add_executable(${TARGET_NAME}
 
   misc/benchmark.h
   misc/print_to_user.h
+  misc/spinlock.cpp
+  misc/spinlock.h
 
   service/service.cpp
   service/service.h
