@@ -4,6 +4,8 @@ add_executable(${TARGET_NAME}
   engine/engine.cpp
   engine/engine.h
 
+  index_holder/add_root_result.h
+  index_holder/remove_root_result.h
   index_holder/index_holder.cpp
   index_holder/index_holder.h
   index_holder/root_index.cpp
@@ -27,6 +29,7 @@ add_executable(${TARGET_NAME}
   input_processor/command_processor/quit_processor.cpp
   input_processor/command_processor/quit_processor.h
 
+  misc/benchmark.h
   misc/print_to_user.h
 
   service/service.cpp
