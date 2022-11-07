@@ -5,6 +5,8 @@
 #include "app/src/index_holder/index_holder.h"
 #include "app/src/service/service.h"
 
+#include "logger/src/logger.h"
+
 engine::engine(service& service, index_holder& index)
   : m_service{service}
   , m_index{index}

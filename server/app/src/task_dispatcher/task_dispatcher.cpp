@@ -1,5 +1,7 @@
 #include "app/src/task_dispatcher/task_dispatcher.h"
 
+#include "logger/src/logger.h"
+
 task_dispatcher::task_dispatcher(std::size_t thread_count)
   : m_work(m_io.get_executor())
 {
