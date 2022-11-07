@@ -17,6 +17,7 @@ public:
 private:
   const std::map<std::string, std::unique_ptr<command_processor>>& m_commands;
 
-  static constexpr auto description = "Use 'help' to see a list of commands. "
+  static constexpr auto description =
+    "Use 'help' to see a list of commands. "
     "Use 'help <command>' to see information about a specific command.";
 };
