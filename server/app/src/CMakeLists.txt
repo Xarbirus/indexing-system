@@ -10,6 +10,8 @@ add_executable(${TARGET_NAME}
   index_holder/index_holder.h
   index_holder/root_index.cpp
   index_holder/root_index.h
+  index_holder/root_index_creator.cpp
+  index_holder/root_index_creator.h
 
   input_processor/commands_holder.cpp
   input_processor/commands_holder.h

@@ -15,7 +15,7 @@ add_root_result index_holder::add_root(const std::filesystem::path& root, const 
 
   auto adder = [&]()
   {
-    root_index temp{m_dispatcher, root, original_root};
+    auto temp = root_index::create(m_dispatcher, root, original_root);
 
     std::scoped_lock lock{m_mutex};
     m_roots.remove_if([&root](const auto& current_root) { return current_root.is_equivalent(root); });
