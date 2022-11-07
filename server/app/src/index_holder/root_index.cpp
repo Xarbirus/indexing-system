@@ -1,6 +1,17 @@
 #include "app/src/index_holder/root_index.h"
 
+#include "app/src/misc/spinlock.h"
+#include "app/src/task_dispatcher/task_dispatcher.h"
+
 #include <fstream>
+
+root_index::root_index(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string)
+  : m_root{root}
+  , m_original_root{root_string}
+{
+  for(const auto& status : process_directory(m_root, dispatcher))
+    status.wait();
+}
 
 root_index::root_index(const std::filesystem::path& root, const std::string& root_string)
   : m_root{root}
@@ -21,27 +32,35 @@ root_index::root_index(root_index&& other) noexcept
   m_original_root = std::move(other.m_original_root);
 }
 
-root_index& root_index::operator=(root_index&& other) noexcept
+std::list<std::future<void>> root_index::process_directory(const std::filesystem::path& path, task_dispatcher& dispatcher)
 {
-  if(&other == this)
-    return *this;
+  spinlock spin;
+  std::list<std::future<void>> statuses;
+  process_directory_impl(path, dispatcher, statuses, spin);
+  return statuses;
+}
 
-  std::scoped_lock lock{m_files_mutex,
-                        m_symbols_mutex,
-                        other.m_files_mutex,
-                        other.m_symbols_mutex};
-
-  m_files = std::move(other.m_files);
-  m_symbols = std::move(other.m_symbols);
-  m_root = std::move(other.m_root);
-  m_original_root = std::move(other.m_original_root);
-
-  return *this;
+void root_index::process_directory_impl(const std::filesystem::path& path,
+                                        task_dispatcher& dispatcher,
+                                        std::list<std::future<void>>& statuses,
+                                        spinlock& spin)
+{
+  for(const auto& dir_entry : std::filesystem::directory_iterator(path))
+  {
+    if(is_directory(dir_entry) and !is_empty(dir_entry))
+    {
+      auto status = dispatcher.add_task([&, dir_entry]() { process_directory_impl(dir_entry, dispatcher, statuses, spin); });
+      std::scoped_lock lock{spin};
+      statuses.emplace_back(std::move(status));
+    }
+    else if(is_regular_file(dir_entry) and dir_entry.path().has_extension())
+      add_file(dir_entry);
+  }
 }
 
 void root_index::add_file(const std::filesystem::path& path)
 {
-  auto get_file_number = [&, number=std::optional<size_t>()] () mutable
+  auto get_file_number = [&, number = std::optional<size_t>()]() mutable
   {
     auto create_file_number = [&]()
     {
@@ -57,8 +76,8 @@ void root_index::add_file(const std::filesystem::path& path)
   };
 
   const auto locale = std::locale();
-  const auto is_alnum = [&](wchar_t c){ return std::isalnum(c, locale); };
-  const auto is_not_alnum = [&](wchar_t c){ return !std::isalnum(c, locale); };
+  const auto is_alnum = [&](wchar_t c) { return std::isalnum(c, locale); };
+  const auto is_not_alnum = [&](wchar_t c) { return !std::isalnum(c, locale); };
 
   const auto file = read_file(path);
   auto word = std::find_if(file.cbegin(), file.cend(), is_alnum);
@@ -78,7 +97,7 @@ void root_index::add_file(const std::filesystem::path& path)
   }
 }
 
-std::wstring root_index::read_file(const std::filesystem::path& path) const
+std::wstring root_index::read_file(const std::filesystem::path& path)
 {
   std::wfstream file{path};
   file.seekg(0, std::ios::end);

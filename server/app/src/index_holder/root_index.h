@@ -4,24 +4,35 @@
 #include <boost/spirit/home/qi/string/tst_map.hpp>
 
 #include <filesystem>
+#include <future>
 #include <shared_mutex>
 #include <unordered_set>
+
+class spinlock;
+class task_dispatcher;
 
 class root_index
 {
 public:
+  root_index(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string);
   root_index(const std::filesystem::path& root, const std::string& root_string);
-  root_index(root_index&& other) noexcept;
 
-  root_index& operator=(root_index&& other) noexcept;
+  root_index(root_index&& other) noexcept;
 
   size_t get_number_of_files() const noexcept;
 
   bool is_equivalent(const std::filesystem::path& root) const;
 
 private:
+  std::list<std::future<void>> process_directory(const std::filesystem::path& path, task_dispatcher& dispatcher);
+  void process_directory_impl(const std::filesystem::path& path,
+                              task_dispatcher& dispatcher,
+                              std::list<std::future<void>>& statuses,
+                              spinlock& spin);
+
   void add_file(const std::filesystem::path& path);
-  std::wstring read_file(const std::filesystem::path& path) const;
+
+  static std::wstring read_file(const std::filesystem::path& path);
 
   std::filesystem::path get_relative_path(const std::filesystem::path& path) const;
 

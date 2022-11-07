@@ -2,6 +2,7 @@
 
 service::service()
   : m_tasks{get_number_of_tasks()}
+  , m_index{m_tasks}
   , m_engine{*this, m_index}
   , m_input{m_engine}
 {}
