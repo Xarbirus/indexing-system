@@ -5,5 +5,5 @@
 struct add_root_result
 {
   std::size_t files{};
-  std::chrono::minutes duration;
+  std::chrono::system_clock::duration duration;
 };

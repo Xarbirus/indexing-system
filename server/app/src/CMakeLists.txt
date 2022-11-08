@@ -4,17 +4,17 @@ add_executable(${TARGET_NAME}
   engine/engine.cpp
   engine/engine.h
 
-  index_holder/add_root_result.h
   index_holder/filenames_storage.cpp
   index_holder/filenames_storage.h
-  index_holder/get_roots_result.h
   index_holder/index_holder.cpp
   index_holder/index_holder.h
-  index_holder/remove_root_result.h
   index_holder/root_index.cpp
   index_holder/root_index.h
   index_holder/root_index_creator.cpp
   index_holder/root_index_creator.h
+  index_holder/results/add_root_result.h
+  index_holder/results/get_roots_result.h
+  index_holder/results/remove_root_result.h
 
   input_processor/commands_holder.cpp
   input_processor/commands_holder.h
@@ -39,6 +39,8 @@ add_executable(${TARGET_NAME}
   input_processor/command_processor/roots_processor.h
 
   misc/benchmark.h
+  misc/duration_to_string.cpp
+  misc/duration_to_string.h
   misc/print_to_user.h
   misc/spinlock.cpp
   misc/spinlock.h
@@ -54,6 +56,8 @@ add_executable(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE
     Boost::boost
+    gRPC::gRPC
+    grpc-index
     logger)
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${APP_NAME})

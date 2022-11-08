@@ -1,9 +1,9 @@
 #include "app/src/engine/engine.h"
 
-#include "app/src/index_holder/add_root_result.h"
-#include "app/src/index_holder/get_roots_result.h"
+#include "app/src/index_holder/results/add_root_result.h"
+#include "app/src/index_holder/results/get_roots_result.h"
 #include "app/src/index_holder/index_holder.h"
-#include "app/src/index_holder/remove_root_result.h"
+#include "app/src/index_holder/results/remove_root_result.h"
 #include "app/src/service/service.h"
 
 #include "logger/src/logger.h"
