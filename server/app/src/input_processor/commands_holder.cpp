@@ -5,6 +5,7 @@
 #include "app/src/input_processor/command_processor/index_processor.h"
 #include "app/src/input_processor/command_processor/quit_processor.h"
 #include "app/src/input_processor/command_processor/remove_processor.h"
+#include "app/src/input_processor/command_processor/roots_processor.h"
 
 commands_holder::commands_holder(engine& engine)
 {
@@ -13,6 +14,7 @@ commands_holder::commands_holder(engine& engine)
   m_commands.emplace("index", std::make_unique<index_processor>(engine));
   m_commands.emplace("quit", std::make_unique<quit_processor>(engine));
   m_commands.emplace("remove", std::make_unique<remove_processor>(engine));
+  m_commands.emplace("roots", std::make_unique<roots_processor>(engine));
 }
 
 void commands_holder::execute(const std::string& command, const std::string& arguments)

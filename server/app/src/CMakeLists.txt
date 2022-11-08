@@ -7,6 +7,7 @@ add_executable(${TARGET_NAME}
   index_holder/add_root_result.h
   index_holder/filenames_storage.cpp
   index_holder/filenames_storage.h
+  index_holder/get_roots_result.h
   index_holder/index_holder.cpp
   index_holder/index_holder.h
   index_holder/remove_root_result.h
@@ -30,10 +31,12 @@ add_executable(${TARGET_NAME}
   input_processor/command_processor/help_processor.h
   input_processor/command_processor/prepare_filepath.cpp
   input_processor/command_processor/prepare_filepath.h
-  input_processor/command_processor/remove_processor.cpp
-  input_processor/command_processor/remove_processor.h
   input_processor/command_processor/quit_processor.cpp
   input_processor/command_processor/quit_processor.h
+  input_processor/command_processor/remove_processor.cpp
+  input_processor/command_processor/remove_processor.h
+  input_processor/command_processor/roots_processor.cpp
+  input_processor/command_processor/roots_processor.h
 
   misc/benchmark.h
   misc/print_to_user.h

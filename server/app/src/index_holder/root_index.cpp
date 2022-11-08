@@ -31,3 +31,8 @@ bool root_index::is_equivalent(const std::filesystem::path& root) const
 {
   return equivalent(root, m_root);
 }
+
+const std::string& root_index::get_original_root() const
+{
+  return m_original_root;
+}

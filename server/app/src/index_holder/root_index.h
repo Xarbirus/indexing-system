@@ -21,6 +21,8 @@ public:
 
   [[nodiscard]] bool is_equivalent(const std::filesystem::path& root) const;
 
+  [[nodiscard]] const std::string& get_original_root() const;
+
 private:
   template<typename Char, typename T>
   using boost_symbols = boost::spirit::qi::symbols<Char, T, boost::spirit::qi::tst_map<Char, T>>;
