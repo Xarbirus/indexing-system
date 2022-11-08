@@ -1,5 +1,6 @@
 [requires]
 boost/1.80.0
+grpc/1.50.0
 gtest/1.12.1
 spdlog/1.10.0
 
