@@ -22,7 +22,7 @@ root_index::root_index(root_index&& other) noexcept
   m_original_root = std::move(other.m_original_root);
 }
 
-size_t root_index::get_number_of_files() const noexcept
+std::size_t root_index::get_number_of_files() const noexcept
 {
   return m_files.size();
 }

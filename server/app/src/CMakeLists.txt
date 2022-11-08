@@ -5,9 +5,11 @@ add_executable(${TARGET_NAME}
   engine/engine.h
 
   index_holder/add_root_result.h
-  index_holder/remove_root_result.h
+  index_holder/filenames_storage.cpp
+  index_holder/filenames_storage.h
   index_holder/index_holder.cpp
   index_holder/index_holder.h
+  index_holder/remove_root_result.h
   index_holder/root_index.cpp
   index_holder/root_index.h
   index_holder/root_index_creator.cpp

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "app/src/index_holder/filenames_storage.h"
+
 #include <boost/spirit/include/qi_symbols.hpp>
 #include <boost/spirit/home/qi/string/tst_map.hpp>
 
@@ -8,12 +10,6 @@
 
 class task_dispatcher;
 
-template<typename Char, typename T>
-using boost_symbols = boost::spirit::qi::symbols<Char, T, boost::spirit::qi::tst_map<Char, T>>;
-using root_symbols = boost_symbols<wchar_t, std::unordered_set<size_t>>;
-
-using root_files = std::vector<std::string>;
-
 class root_index
 {
 public:
@@ -21,16 +17,20 @@ public:
 
   root_index(root_index&& other) noexcept;
 
-  [[nodiscard]] size_t get_number_of_files() const noexcept;
+  [[nodiscard]] std::size_t get_number_of_files() const noexcept;
 
   [[nodiscard]] bool is_equivalent(const std::filesystem::path& root) const;
 
 private:
+  template<typename Char, typename T>
+  using boost_symbols = boost::spirit::qi::symbols<Char, T, boost::spirit::qi::tst_map<Char, T>>;
+  using symbols = boost_symbols<wchar_t, std::set<const filenames_storage::filename*>>;
+
   class creator;
   root_index(creator&& creator_);
 
-  root_files m_files;
-  root_symbols m_symbols;
+  filenames_storage m_files;
+  symbols m_symbols;
 
   std::filesystem::path m_root;
   std::string m_original_root;

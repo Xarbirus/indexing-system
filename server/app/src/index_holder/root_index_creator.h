@@ -32,6 +32,6 @@ private:
   std::mutex m_files_mutex;
   std::mutex m_symbols_mutex;
 
-  root_files m_files;
-  root_symbols m_symbols;
+  filenames_storage m_files;
+  symbols m_symbols;
 };

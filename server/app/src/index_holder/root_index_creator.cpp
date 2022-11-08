@@ -31,19 +31,15 @@ std::wstring root_index::creator::read_file(const std::filesystem::path& path)
 
 void root_index::creator::add_file(const std::filesystem::path& path)
 {
-  auto get_file_number = [&, number = std::optional<size_t>()]() mutable
+  const filenames_storage::filename* current_indices = nullptr;
+  auto get_filename_indices = [&]() mutable
   {
-    auto create_file_number = [&]()
+    if(current_indices == nullptr) [[unlikely]]
     {
-      auto relative_path = relative(path, m_root);
-      std::unique_lock lock{m_files_mutex};
-      m_files.emplace_back(relative_path.c_str());
-
-      return m_files.size() - 1;
-    };
-    if(!number) [[unlikely]]
-      number = create_file_number();
-    return *number;
+      std::scoped_lock lock{m_files_mutex};
+      current_indices = m_files.add_file(relative(path, m_root));
+    }
+    return current_indices;
   };
 
   const auto locale = std::locale();
@@ -55,13 +51,11 @@ void root_index::creator::add_file(const std::filesystem::path& path)
   while(word != file.cend())
   {
     auto delim = std::find_if(word, file.cend(), is_not_alnum);
-    const auto file_number = get_file_number();
-
     std::unique_lock lock{m_symbols_mutex};
     if(auto found = m_symbols.find(std::wstring_view{word, delim}))
-      found->insert(file_number);
+      found->insert(get_filename_indices());
     else
-      m_symbols.add(word, delim, {file_number});
+      m_symbols.add(word, delim, {get_filename_indices()});
     lock.unlock();
 
     word = std::find_if(delim, file.cend(), is_alnum);
@@ -74,7 +68,8 @@ void root_index::creator::add_directory(const std::filesystem::path& path)
   {
     if(is_directory(dir_entry) and !is_empty(dir_entry))
     {
-      auto status = m_dispatcher.add_task([&, dir_entry]() { add_directory(dir_entry); });
+      auto task = [&, dir_entry]() { add_directory(dir_entry); };
+      auto status = m_dispatcher.add_task(std::move(task));
       std::scoped_lock lock{m_spin};
       m_statuses.emplace_back(std::move(status));
     }
