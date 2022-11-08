@@ -20,8 +20,8 @@ void index_processor::execute(const std::string& arguments)
     if(const auto prepared_path = prepare_filepath(path))
     {
       const auto result = m_engine.add_root(*prepared_path, path);
-      print_to_user(fmt::format("Finished in {} minute(s). {} file(s) indexed.", result.duration.count(), result.number_of_files));
-      LOG_INFO("Indexed {} file(s) in '{}' ({} minute(s)).", result.number_of_files, path, result.duration.count());
+      print_to_user(fmt::format("Finished in {} minute(s). {} file(s) indexed.", result.duration.count(), result.files));
+      LOG_INFO("Indexed {} file(s) in '{}' ({} minute(s)).", result.files, path, result.duration.count());
     }
   }
   else

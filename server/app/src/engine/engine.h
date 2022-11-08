@@ -17,6 +17,8 @@ public:
   add_root_result add_root(const std::filesystem::path& root, const std::string& original_root);
   remove_root_result remove_root(const std::filesystem::path& root, const std::string& original_root);
 
+  remove_root_result clear_roots();
+
 private:
   service& m_service;
   index_holder& m_index;

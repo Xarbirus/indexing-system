@@ -1,5 +1,6 @@
 #include "app/src/input_processor/commands_holder.h"
 
+#include "app/src/input_processor/command_processor/clear_processor.h"
 #include "app/src/input_processor/command_processor/help_processor.h"
 #include "app/src/input_processor/command_processor/index_processor.h"
 #include "app/src/input_processor/command_processor/quit_processor.h"
@@ -7,6 +8,7 @@
 
 commands_holder::commands_holder(engine& engine)
 {
+  m_commands.emplace("clear", std::make_unique<clear_processor>(engine));
   m_commands.emplace("help", std::make_unique<help_processor>(m_commands));
   m_commands.emplace("index", std::make_unique<index_processor>(engine));
   m_commands.emplace("quit", std::make_unique<quit_processor>(engine));

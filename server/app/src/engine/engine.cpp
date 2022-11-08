@@ -29,3 +29,9 @@ remove_root_result engine::remove_root(const std::filesystem::path& root, const 
   LOG_INFO("Engine removes root '{}' ({}).", root.c_str(), original_root);
   return m_index.remove_root(root, original_root);
 }
+
+remove_root_result engine::clear_roots()
+{
+  LOG_INFO("Engine removes all roots.");
+  return m_index.clear_roots();
+}

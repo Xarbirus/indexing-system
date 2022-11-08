@@ -20,7 +20,7 @@ void remove_processor::execute(const std::string& arguments)
     if(const auto prepared_path = prepare_filepath(path))
     {
       const auto result = m_engine.remove_root(*prepared_path, path);
-      print_to_user(fmt::format("Finished in {} minute(s)", result.duration.count()));
+      print_to_user(fmt::format("Finished in {} minute(s).", result.duration.count()));
       LOG_INFO("Removed '{}' ({} minute(s)).", path, result.duration.count());
     }
   }
