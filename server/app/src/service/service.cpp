@@ -1,20 +1,24 @@
 #include "app/src/service/service.h"
 
-service::service()
-  : m_tasks{get_number_of_tasks()}
+service::service(service_configuration&& cfg)
+  : m_cfg{std::move(cfg)}
+  , m_tasks{get_number_of_tasks()}
   , m_index{m_tasks}
   , m_engine{*this, m_index}
   , m_input{m_engine}
+  , m_server{m_cfg.server_address, m_engine}
 {}
 
 void service::initialize()
 {
-  m_input.run();
+  m_input.start();
+  m_server.start();
 }
 
 void service::finalize()
 {
   m_input.stop();
+  m_server.stop();
 }
 
 unsigned service::get_number_of_tasks() noexcept

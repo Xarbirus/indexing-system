@@ -1,7 +1,6 @@
 #include "app/src/input_processor/input_processor.h"
 
 #include "app/src/input_processor/prepare_command.h"
-#include "app/src/input_processor/command_processor/prepare_filepath.h"
 #include "app/src/misc/print_to_user.h"
 
 #include "logger/src/logger.h"
@@ -13,8 +12,10 @@ input_processor::input_processor(engine& engine)
   : m_commands{engine}
 {}
 
-void input_processor::run() noexcept
+void input_processor::start()
 {
+  print_to_user("Service started.");
+
   auto user_input = [&]
   {
     std::string line;
@@ -45,5 +46,6 @@ void input_processor::run() noexcept
 
 void input_processor::stop()
 {
+  print_to_user("Service stopped.");
   std::cin.setstate(std::ios_base::eofbit);
 }

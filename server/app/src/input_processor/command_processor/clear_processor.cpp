@@ -14,7 +14,7 @@ clear_processor::clear_processor(engine& engine)
 void clear_processor::execute(const std::string&)
 {
   const auto result = m_engine.clear_roots();
-  const auto duration = to_user(result.duration);
+  const auto duration = to_user_string(result.duration);
   print_to_user(fmt::format("Finished in {}.", duration));
   LOG_INFO("Index was cleared ({}).", duration);
 }

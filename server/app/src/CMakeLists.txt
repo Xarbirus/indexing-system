@@ -4,6 +4,17 @@ add_executable(${TARGET_NAME}
   engine/engine.cpp
   engine/engine.h
 
+  grpc/check_host_address.cpp
+  grpc/check_host_address.h
+  grpc/grpc_call_processor.h
+  grpc/grpc_error.h
+  grpc/grpc_server.cpp
+  grpc/grpc_server.h
+  grpc/index_service.cpp
+  grpc/index_service.h
+  grpc/converters/index_holder_results.h
+  grpc/converters/index_holder_results.cpp
+
   index_holder/filenames_storage.cpp
   index_holder/filenames_storage.h
   index_holder/index_holder.cpp
@@ -29,8 +40,6 @@ add_executable(${TARGET_NAME}
   input_processor/command_processor/index_processor.h
   input_processor/command_processor/help_processor.cpp
   input_processor/command_processor/help_processor.h
-  input_processor/command_processor/prepare_filepath.cpp
-  input_processor/command_processor/prepare_filepath.h
   input_processor/command_processor/quit_processor.cpp
   input_processor/command_processor/quit_processor.h
   input_processor/command_processor/remove_processor.cpp
@@ -49,6 +58,7 @@ add_executable(${TARGET_NAME}
   service/service.h
   service/service_base.cpp
   service/service_base.h
+  service/service_configuration.h
 
   task_dispatcher/task_dispatcher.cpp
   task_dispatcher/task_dispatcher.h)

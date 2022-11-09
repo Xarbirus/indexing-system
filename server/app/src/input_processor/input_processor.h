@@ -13,7 +13,7 @@ class input_processor
 public:
   explicit input_processor(engine& engine);
 
-  void run() noexcept;
+  void start();
   void stop();
 
 private:

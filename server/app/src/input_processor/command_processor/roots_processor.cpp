@@ -14,7 +14,7 @@ roots_processor::roots_processor(engine& engine)
 void roots_processor::execute(const std::string&)
 {
   const auto result = m_engine.get_roots();
-  const auto duration = to_user(result.duration);
+  const auto duration = to_user_string(result.duration);
   print_to_user(fmt::format("Finished in {}.", duration));
   LOG_INFO("Find {} roots ({}).", result.roots.size(), duration);
 }

@@ -2,7 +2,9 @@
 
 #include <fmt/chrono.h>
 
-std::string to_user(const std::chrono::system_clock::duration& duration)
+std::string to_user_string(const std::chrono::system_clock::duration& duration)
 {
-  return fmt::format("{:%M minute(s) %S second(s)}", floor<std::chrono::seconds>(duration));
+  return fmt::format("{} minute(s) {} second(s)",
+                     floor<std::chrono::minutes>(duration).count(),
+                     floor<std::chrono::seconds>(duration).count() % 60);
 }

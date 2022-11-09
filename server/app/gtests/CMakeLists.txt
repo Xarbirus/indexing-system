@@ -1,14 +1,18 @@
 set(tests_name ${TARGET_NAME}_gtests)
 
 add_executable(${tests_name}
+  check_host_address_tests.cpp
   prepare_command_tests.cpp
 
+  ../src/grpc/check_host_address.cpp
+  ../src/grpc/check_host_address.h
   ../src/input_processor/prepare_command.cpp
   ../src/input_processor/prepare_command.h)
 
 target_link_libraries(${tests_name}
   PRIVATE
     Boost::boost
+    fmt::fmt
     GTest::gtest
     GTest::gtest_main)
 

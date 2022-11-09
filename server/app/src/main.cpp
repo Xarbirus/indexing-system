@@ -1,4 +1,8 @@
 #include "app/src/service/service.h"
+
+#include "app/src/grpc/check_host_address.h"
+#include "app/src/misc/print_to_user.h"
+
 #include "logger/src/logger.h"
 #include "logger/src/logger_defines.h"
 
@@ -11,15 +15,27 @@ void set_logger(char* app_path)
   logger::reset(logs_path, logger::default_log_size, logger::default_log_files, logger::default_log_level);
 }
 
-int main(int /*argc*/, char* argv[])
+int main(int argc, char* argv[])
 {
   try
   {
     std::locale::global(std::locale(""));
 
+    if(argc != 2)
+    {
+      print_to_user("Not enough arguments: add \"<host>:<port>\" to start.");
+      return EXIT_FAILURE;
+    }
+
+    if(!is_correct_host_address(argv[1]))
+    {
+      print_to_user(fmt::format("Incorrect \"<host>:<port>\": {}.", argv[1]));
+      return EXIT_FAILURE;
+    }
+
     set_logger(argv[0]);
 
-    service().run();
+    service({argv[1]}).run();
   }
   catch(const std::exception& ex)
   {

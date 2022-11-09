@@ -19,16 +19,16 @@ void engine::stop_service()
   m_service.stop();
 }
 
-add_root_result engine::add_root(const std::filesystem::path& root, const std::string& original_root)
+add_root_result engine::add_root(const std::string& root)
 {
-  LOG_DEBUG("Engine adds root '{}' ({}).", root.c_str(), original_root);
-  return m_index.add_root(root, original_root);
+  LOG_DEBUG("Engine adds root '{}').", root);
+  return m_index.add_root(root);
 }
 
-remove_root_result engine::remove_root(const std::filesystem::path& root, const std::string& original_root)
+remove_root_result engine::remove_root(const std::string& root)
 {
-  LOG_DEBUG("Engine removes root '{}' ({}).", root.c_str(), original_root);
-  return m_index.remove_root(root, original_root);
+  LOG_DEBUG("Engine removes root '{}'.", root);
+  return m_index.remove_root(root);
 }
 
 get_roots_result engine::get_roots()
