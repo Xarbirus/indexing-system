@@ -4,7 +4,7 @@
 #include <functional>
 
 template<typename Fcn, typename... Args>
-std::chrono::system_clock::duration benchmark(Fcn&& fcn, Args&&... args)
+[[nodiscard]] std::chrono::system_clock::duration benchmark(Fcn&& fcn, Args&&... args)
 {
   const auto start = std::chrono::system_clock::now();
   std::invoke(std::forward<Fcn>(fcn), std::forward<Args>(args)...);

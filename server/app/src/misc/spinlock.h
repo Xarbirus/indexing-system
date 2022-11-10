@@ -6,7 +6,7 @@ class spinlock
 {
 public:
   void lock() noexcept;
-  bool try_lock() noexcept;
+  [[nodiscard]] bool try_lock() noexcept;
 
   void unlock() noexcept;
 

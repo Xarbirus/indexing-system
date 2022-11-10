@@ -7,7 +7,7 @@
 
 #include "index.pb.h"
 
-rpc::add_root_result to_grpc(const add_root_result& value);
-rpc::get_files_result to_grpc(const get_files_result& value);
-rpc::get_roots_result to_grpc(const get_roots_result& value);
-rpc::remove_root_result to_grpc(const remove_root_result& value);
+[[nodiscard]] rpc::add_root_result to_grpc(const add_root_result& value);
+[[nodiscard]] rpc::get_files_result to_grpc(const get_files_result& value);
+[[nodiscard]] rpc::get_roots_result to_grpc(const get_roots_result& value);
+[[nodiscard]] rpc::remove_root_result to_grpc(const remove_root_result& value);

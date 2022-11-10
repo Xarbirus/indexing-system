@@ -21,12 +21,12 @@ public:
   grpc::Status get_files_in_root(grpc::ServerContext*, const rpc::get_files_in_root_request*, rpc::get_files_result*) override;
 
 private:
-  rpc::add_root_result add_root_impl(const rpc::root& request);
-  rpc::remove_root_result remove_root_impl(const rpc::root& request);
-  rpc::get_roots_result get_roots_impl(const rpc::empty& request);
-  rpc::remove_root_result clear_roots_impl(const rpc::empty& request);
-  rpc::get_files_result get_files_impl(const rpc::get_files_request& request);
-  rpc::get_files_result get_files_in_root_impl(const rpc::get_files_in_root_request& request);
+  [[nodiscard]] rpc::add_root_result add_root_impl(const rpc::root& request);
+  [[nodiscard]] rpc::remove_root_result remove_root_impl(const rpc::root& request);
+  [[nodiscard]] rpc::get_roots_result get_roots_impl(const rpc::empty& request);
+  [[nodiscard]] rpc::remove_root_result clear_roots_impl(const rpc::empty& request);
+  [[nodiscard]] rpc::get_files_result get_files_impl(const rpc::get_files_request& request);
+  [[nodiscard]] rpc::get_files_result get_files_in_root_impl(const rpc::get_files_in_root_request& request);
 
   engine& m_engine;
 };

@@ -18,7 +18,7 @@ namespace logger::details
 
   void format_pattern::format(const spdlog::details::log_msg& msg, const std::tm&, spdlog::memory_buf_t& dest)
   {
-    if(!msg.source.funcname || !msg.source.filename)
+    if(!msg.source.funcname || !msg.source.filename) [[unlikely]]
       return;
 
     dest.push_back(' ');
