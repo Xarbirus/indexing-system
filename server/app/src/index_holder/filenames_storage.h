@@ -14,7 +14,9 @@ public:
 
   [[nodiscard]] std::size_t size() const noexcept;
 
-  [[nodiscard]] const filename* add_file(const std::filesystem::path& file);
+  const filename* add_file(const std::filesystem::path& file);
+
+  [[nodiscard]] std::optional<std::filesystem::path> get_file(const filename* file_indices) const;
 
 private:
   boost::bimap<std::string, part_index> m_parts;

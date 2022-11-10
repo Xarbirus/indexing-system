@@ -13,3 +13,19 @@ const filenames_storage::filename* filenames_storage::add_file(const std::filesy
 
   return &(*m_files.emplace(std::move(indices)).first);
 }
+
+std::optional<std::filesystem::path> filenames_storage::get_file(const filename* file_indices) const
+{
+  if(!file_indices or file_indices->empty())
+    return std::nullopt;
+
+  std::filesystem::path out;
+  for(part_index index : *file_indices)
+  {
+    auto iter = m_parts.right.find(index);
+    if(iter == m_parts.right.end())
+      return std::nullopt;
+    out /= iter->second;
+  }
+  return out;
+}
