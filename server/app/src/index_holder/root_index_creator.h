@@ -16,7 +16,7 @@ public:
   creator(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string);
 
 private:
-  static std::wstring read_file(const std::filesystem::path& path);
+  static std::string read_file(const std::filesystem::path& path);
 
   void add_file(const std::filesystem::path& path);
   void add_directory(const std::filesystem::path& path);

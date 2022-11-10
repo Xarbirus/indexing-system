@@ -23,10 +23,12 @@ public:
 
   [[nodiscard]] const std::string& get_original_root() const;
 
+  [[nodiscard]] std::vector<std::string> get_filenames(const std::string& word) const;
+
 private:
   template<typename Char, typename T>
   using boost_symbols = boost::spirit::qi::symbols<Char, T, boost::spirit::qi::tst_map<Char, T>>;
-  using symbols = boost_symbols<wchar_t, std::set<const filenames_storage::filename*>>;
+  using symbols = boost_symbols<char, std::set<const filenames_storage::filename*>>;
 
   class creator;
   root_index(creator&& creator_);

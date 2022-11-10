@@ -27,6 +27,29 @@ message get_roots_result
   repeated string roots = 2;
 };
 
+message get_files_result
+{
+  int64 duration = 1;
+
+  message root_info
+  {
+    string root_path = 1;
+    repeated string files = 2;
+  };
+  repeated root_info roots = 2;
+};
+
+message get_files_request
+{
+  string word = 1;
+};
+
+message get_files_in_root_request
+{
+  string word = 1;
+  string root = 2;
+};
+
 service index_service
 {
   rpc add_root(root) returns(add_root_result) {}
@@ -34,4 +57,7 @@ service index_service
 
   rpc get_roots(empty) returns(get_roots_result) {}
   rpc clear_roots(empty) returns(remove_root_result) {}
+
+  rpc get_files(get_files_request) returns(get_files_result) {}
+  rpc get_files_in_root(get_files_in_root_request) returns(get_files_result) {}
 }

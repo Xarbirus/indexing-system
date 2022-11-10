@@ -14,16 +14,16 @@ root_index::creator::creator(task_dispatcher& dispatcher, const std::filesystem:
     status.wait();
 }
 
-std::wstring root_index::creator::read_file(const std::filesystem::path& path)
+std::string root_index::creator::read_file(const std::filesystem::path& path)
 {
-  std::wfstream file{path};
+  std::fstream file{path};
   file.seekg(0, std::ios::end);
   auto len = file.tellg();
   if(len == -1) [[unlikely]]
     return {};
   file.seekg(0, std::ios::beg);
 
-  std::wstring out;
+  std::string out;
   out.resize(static_cast<std::size_t>(len));
   file.read(out.data(), len);
   return out;
@@ -43,8 +43,8 @@ void root_index::creator::add_file(const std::filesystem::path& path)
   };
 
   const auto locale = std::locale();
-  const auto is_alnum = [&](wchar_t c) { return std::isalnum(c, locale); };
-  const auto is_not_alnum = [&](wchar_t c) { return !std::isalnum(c, locale); };
+  const auto is_alnum = [&](char c) { return std::isalnum(c, locale); };
+  const auto is_not_alnum = [&](char c) { return !std::isalnum(c, locale); };
 
   const auto file = read_file(path);
   auto word = std::find_if(file.cbegin(), file.cend(), is_alnum);
@@ -52,7 +52,7 @@ void root_index::creator::add_file(const std::filesystem::path& path)
   {
     auto delim = std::find_if(word, file.cend(), is_not_alnum);
     std::unique_lock lock{m_symbols_mutex};
-    if(auto found = m_symbols.find(std::wstring_view{word, delim}))
+    if(auto found = m_symbols.find(std::string_view{word, delim}))
       found->insert(get_filename_indices());
     else
       m_symbols.add(word, delim, {get_filename_indices()});
