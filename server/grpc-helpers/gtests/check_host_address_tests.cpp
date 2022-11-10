@@ -1,4 +1,4 @@
-#include "app/src/grpc/check_host_address.h"
+#include "grpc-helpers/src/check_host_address.h"
 
 #include <gtest/gtest.h>
 #include <fmt/format.h>

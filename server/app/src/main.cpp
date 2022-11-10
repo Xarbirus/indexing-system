@@ -1,8 +1,8 @@
 #include "app/src/service/service.h"
 
-#include "app/src/grpc/check_host_address.h"
 #include "app/src/misc/print_to_user.h"
 
+#include "grpc-helpers/src/check_host_address.h"
 #include "logger/src/logger.h"
 #include "logger/src/logger_defines.h"
 

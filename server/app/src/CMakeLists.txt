@@ -4,10 +4,6 @@ add_executable(${TARGET_NAME}
   engine/engine.cpp
   engine/engine.h
 
-  grpc/check_host_address.cpp
-  grpc/check_host_address.h
-  grpc/grpc_call_processor.h
-  grpc/grpc_error.h
   grpc/grpc_server.cpp
   grpc/grpc_server.h
   grpc/index_service.cpp
@@ -67,7 +63,7 @@ add_executable(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE
     Boost::boost
-    gRPC::gRPC
+    grpc-helpers
     grpc-index
     logger)
 

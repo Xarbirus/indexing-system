@@ -1,6 +1,6 @@
 #pragma once
 
-#include "app/src/grpc/grpc_error.h"
+#include "grpc-helpers/src/grpc_error.h"
 
 #include <functional>
 

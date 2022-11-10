@@ -4,4 +4,5 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include_directories(${GENERATED_GRPC_DIRECTORY})
 
 add_subdirectory(app)
+add_subdirectory(grpc-helpers)
 add_subdirectory(logger)

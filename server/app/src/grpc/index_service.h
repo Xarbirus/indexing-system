@@ -1,6 +1,6 @@
 #pragma once
 
-#include "app/src/grpc/grpc_call_processor.h"
+#include "grpc-helpers/src/grpc_call_processor.h"
 
 #include "index.grpc.pb.h"
 
