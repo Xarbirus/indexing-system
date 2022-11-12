@@ -7,11 +7,12 @@
 
 #include "logger/src/logger.h"
 
-clear_processor::clear_processor(engine& engine)
-  : m_engine{engine}
+clear_processor::clear_processor(std::string _command, engine& engine)
+  : command_info{std::move(_command), "Use '{}' to remove everything from the index."}
+  , m_engine{engine}
 {}
 
-void clear_processor::execute(const std::string&)
+void clear_processor::execute(std::string_view)
 {
   const auto result = m_engine.clear_roots();
   const auto duration = to_user_string(result.duration);
@@ -19,7 +20,7 @@ void clear_processor::execute(const std::string&)
   LOG_INFO("Index was cleared ({}).", duration);
 }
 
-std::string clear_processor::get_description() const
+std::string_view clear_processor::get_description() const
 {
   return description;
 }

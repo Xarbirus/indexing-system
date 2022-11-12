@@ -10,11 +10,12 @@
 
 #include <fmt/chrono.h>
 
-index_processor::index_processor(engine& engine)
-  : m_engine{engine}
+index_processor::index_processor(std::string _command, engine& engine)
+  : command_info{std::move(_command), "Use '{} <absolute_path_to_directory>' to start indexing the directory."}
+  , m_engine{engine}
 {}
 
-void index_processor::execute(const std::string& arguments)
+void index_processor::execute(std::string_view arguments)
 {
   const auto [path, suffix] = separate_first_word(arguments);
   if(!path.empty() and suffix.empty())
@@ -28,7 +29,7 @@ void index_processor::execute(const std::string& arguments)
     print_to_user(description);
 }
 
-std::string index_processor::get_description() const
+std::string_view index_processor::get_description() const
 {
   return description;
 }

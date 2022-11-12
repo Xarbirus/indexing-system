@@ -1,20 +1,19 @@
 #pragma once
 
+#include "app/src/input_processor/command_processor/command_info.h"
 #include "app/src/input_processor/command_processor/command_processor.h"
 
 class engine;
 
-class quit_processor : public command_processor
+class quit_processor : public command_processor, private command_info
 {
 public:
-  explicit quit_processor(engine& engine);
+  quit_processor(std::string _command, engine& engine);
 
-  void execute(const std::string&) override;
+  void execute(std::string_view) override;
 
-  [[nodiscard]] std::string get_description() const override;
+  [[nodiscard]] std::string_view get_description() const override;
 
 private:
   engine& m_engine;
-
-  static constexpr auto description = "Use 'quit' to stop the service.";
 };

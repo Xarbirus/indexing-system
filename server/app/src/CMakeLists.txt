@@ -30,9 +30,11 @@ add_executable(${TARGET_NAME}
   input_processor/input_processor.h
   input_processor/prepare_command.cpp
   input_processor/prepare_command.h
-  input_processor/command_processor/command_processor.h
   input_processor/command_processor/clear_processor.cpp
   input_processor/command_processor/clear_processor.h
+  input_processor/command_processor/command_info.cpp
+  input_processor/command_processor/command_info.h
+  input_processor/command_processor/command_processor.h
   input_processor/command_processor/index_processor.cpp
   input_processor/command_processor/index_processor.h
   input_processor/command_processor/help_processor.cpp

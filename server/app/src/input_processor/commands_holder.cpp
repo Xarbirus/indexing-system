@@ -9,12 +9,12 @@
 
 commands_holder::commands_holder(engine& engine)
 {
-  m_commands.emplace("clear", std::make_unique<clear_processor>(engine));
-  m_commands.emplace("help", std::make_unique<help_processor>(m_commands));
-  m_commands.emplace("index", std::make_unique<index_processor>(engine));
-  m_commands.emplace("quit", std::make_unique<quit_processor>(engine));
-  m_commands.emplace("remove", std::make_unique<remove_processor>(engine));
-  m_commands.emplace("roots", std::make_unique<roots_processor>(engine));
+  add<clear_processor>("clear", engine);
+  add<help_processor>("help", m_commands);
+  add<index_processor>("index", engine);
+  add<quit_processor>("quit", engine);
+  add<remove_processor>("remove", engine);
+  add<roots_processor>("roots", engine);
 }
 
 void commands_holder::execute(const std::string& command, const std::string& arguments)

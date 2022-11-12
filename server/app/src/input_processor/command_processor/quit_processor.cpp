@@ -2,16 +2,17 @@
 
 #include "app/src/engine/engine.h"
 
-quit_processor::quit_processor(engine& engine)
-  : m_engine{engine}
+quit_processor::quit_processor(std::string _command, engine& engine)
+  : command_info{std::move(_command), "Use '{}' to stop the service."}
+  , m_engine{engine}
 {}
 
-void quit_processor::execute(const std::string&)
+void quit_processor::execute(std::string_view)
 {
   m_engine.stop_service();
 }
 
-std::string quit_processor::get_description() const
+std::string_view quit_processor::get_description() const
 {
   return description;
 }

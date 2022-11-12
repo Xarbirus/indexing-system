@@ -1,18 +1,19 @@
 #pragma once
 
+#include "app/src/input_processor/command_processor/command_info.h"
 #include "app/src/input_processor/command_processor/command_processor.h"
 
 #include <map>
 #include <memory>
 
-class help_processor : public command_processor
+class help_processor : public command_processor, private command_info
 {
 public:
-  explicit help_processor(const std::map<std::string, std::unique_ptr<command_processor>>& commands);
+  help_processor(std::string _command, const std::map<std::string, std::unique_ptr<command_processor>>& commands);
 
-  void execute(const std::string& arguments) override;
+  void execute(std::string_view arguments) override;
 
-  [[nodiscard]] std::string get_description() const override;
+  [[nodiscard]] std::string_view get_description() const override;
 
 private:
   const std::map<std::string, std::unique_ptr<command_processor>>& m_commands;

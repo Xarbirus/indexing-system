@@ -1,20 +1,19 @@
 #pragma once
 
+#include "app/src/input_processor/command_processor/command_info.h"
 #include "app/src/input_processor/command_processor/command_processor.h"
 
 class engine;
 
-class index_processor : public command_processor
+class index_processor : public command_processor, private command_info
 {
 public:
-  explicit index_processor(engine& engine);
+  index_processor(std::string _command, engine& engine);
 
-  void execute(const std::string& arguments) override;
+  void execute(std::string_view arguments) override;
 
-  [[nodiscard]] std::string get_description() const override;
+  [[nodiscard]] std::string_view get_description() const override;
 
 private:
   engine& m_engine;
-
-  static constexpr auto description = "Use 'index <absolute_path_to_directory>' to start indexing the directory.";
 };

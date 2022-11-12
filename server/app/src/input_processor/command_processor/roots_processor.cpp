@@ -7,19 +7,23 @@
 
 #include "logger/src/logger.h"
 
-roots_processor::roots_processor(engine& engine)
-  : m_engine{engine}
+roots_processor::roots_processor(std::string _command, engine& engine)
+  : command_info{std::move(_command), "Use '{}' to get all indexed roots."}
+  , m_engine{engine}
 {}
 
-void roots_processor::execute(const std::string&)
+void roots_processor::execute(std::string_view)
 {
   const auto result = m_engine.get_roots();
   const auto duration = to_user_string(result.duration);
   print_to_user(fmt::format("Finished in {}.", duration));
+  print_to_user("Available roots:");
+  for(const auto& root : result.roots)
+    print_to_user("\t", root);
   LOG_INFO("Find {} roots ({}).", result.roots.size(), duration);
 }
 
-std::string roots_processor::get_description() const
+std::string_view roots_processor::get_description() const
 {
   return description;
 }

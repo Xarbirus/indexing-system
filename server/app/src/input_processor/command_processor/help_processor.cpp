@@ -3,11 +3,12 @@
 #include "app/src/input_processor/prepare_command.h"
 #include "app/src/misc/print_to_user.h"
 
-help_processor::help_processor(const std::map<std::string, std::unique_ptr<command_processor>>& commands)
-  : m_commands{commands}
+help_processor::help_processor(std::string _command, const std::map<std::string, std::unique_ptr<command_processor>>& commands)
+  : command_info{std::move(_command), "Use '{0}' to see a list of commands. Use '{0} <command>' to see information about a specific command."}
+  , m_commands{commands}
 {}
 
-void help_processor::execute(const std::string& arguments)
+void help_processor::execute(std::string_view arguments)
 {
   const auto [command_to_help, _] = separate_first_word(arguments);
   if(auto it = m_commands.find(command_to_help); it != m_commands.end())
@@ -15,12 +16,12 @@ void help_processor::execute(const std::string& arguments)
   else
   {
     print_to_user("Available commands:");
-    for(const auto& command : m_commands)
-      print_to_user('\t', command.first, '\t', command.second->get_description());
+    for(const auto& _command : m_commands)
+      print_to_user('\t', _command.first, '\t', _command.second->get_description());
   };
 }
 
-std::string help_processor::get_description() const
+std::string_view help_processor::get_description() const
 {
   return description;
 }

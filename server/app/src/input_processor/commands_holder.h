@@ -15,5 +15,11 @@ public:
   void execute(const std::string& command, const std::string& arguments);
 
 private:
+  template<typename Processor, typename... Args>
+  void add(const std::string& command, Args&&... args)
+  {
+    m_commands.emplace(command, std::make_unique<Processor>(command, std::forward<Args>(args)...));
+  }
+
   std::map<std::string, std::unique_ptr<command_processor>> m_commands;
 };
