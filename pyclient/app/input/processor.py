@@ -38,7 +38,7 @@ class Processor:
             command = input().split(" ", 1)
             processor = self.__processors.get(command[0].lower())
             if processor:
-                processor.execute(command[1] if len(command) == 2 else "")
+                processor.execute(command[1].strip() if len(command) == 2 else "")
             else:
                 print(f"Unknown command '{command[0]}'.")
                 self.__processors.get("help").execute()
