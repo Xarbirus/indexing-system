@@ -2,7 +2,7 @@
 
 #include "grpc-helpers/src/grpc_call_processor.h"
 
-#include "index.grpc.pb.h"
+#include "generated/grpc/index.grpc.pb.h"
 
 class engine;
 

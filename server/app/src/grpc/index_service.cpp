@@ -11,13 +11,13 @@ index_service::index_service(engine& engine)
 
 rpc::add_root_result index_service::add_root_impl(const rpc::root& root)
 {
-  LOG_INFO("Grpc server called, root - {}.", root.value());
+  LOG_INFO("Grpc server called, root - '{}'.", root.value());
   return to_grpc(m_engine.add_root(root.value()));
 }
 
 rpc::remove_root_result index_service::remove_root_impl(const rpc::root& root)
 {
-  LOG_INFO("Grpc server called, root - {}.", root.value());
+  LOG_INFO("Grpc server called, root - '{}'.", root.value());
   return to_grpc(m_engine.remove_root(root.value()));
 }
 
@@ -36,13 +36,13 @@ rpc::remove_root_result index_service::clear_roots_impl(const rpc::empty&)
 
 rpc::get_files_result index_service::get_files_impl(const rpc::get_files_request& request)
 {
-  LOG_INFO("Grpc server called, word - {}.", request.word());
+  LOG_INFO("Grpc server called, word - '{}'.", request.word());
   return to_grpc(m_engine.get_files(request.word()));
 }
 
 rpc::get_files_result index_service::get_files_in_root_impl(const rpc::get_files_in_root_request& request)
 {
-  LOG_INFO("Grpc server called, word - {}, root - {}.", request.word(), request.root());
+  LOG_INFO("Grpc server called, word - '{}', root - '{}'.", request.word(), request.root());
   return to_grpc(m_engine.get_files(request.word(), request.root()));
 }
 

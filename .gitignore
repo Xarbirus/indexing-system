@@ -6,4 +6,7 @@ cmake-build-*/
 
 # Builds
 out/
-generated/
+
+# Generated
+pyclient/app/generated/
+server/generated/
