@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 package rpc;
 
 message empty
@@ -12,24 +14,24 @@ message root
 
 message add_root_result
 {
-  int64 duration = 1;
+  google.protobuf.Timestamp duration = 1;
   uint64 files = 2;
 };
 
 message remove_root_result
 {
-  int64 duration = 1;
+  google.protobuf.Timestamp duration = 1;
 }
 
 message get_roots_result
 {
-  int64 duration = 1;
+  google.protobuf.Timestamp duration = 1;
   repeated string roots = 2;
 };
 
 message get_files_result
 {
-  int64 duration = 1;
+  google.protobuf.Timestamp duration = 1;
 
   message root_info
   {

@@ -22,7 +22,7 @@ void index_processor::execute(std::string_view arguments)
   {
     const auto result = m_engine.add_root(path);
     const auto duration = to_user_string(result.duration);
-    print_to_user(fmt::format("Finished in {} . {} file(s) indexed.", duration, result.files));
+    print_to_user(fmt::format("Finished in {}. {} file(s) indexed.", duration, result.files));
     LOG_INFO("Indexed {} file(s) in '{}' ({}).", result.files, path, duration);
   }
   else
