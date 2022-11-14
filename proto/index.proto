@@ -36,7 +36,13 @@ message get_files_result
   message root_info
   {
     string root_path = 1;
-    repeated string files = 2;
+
+    message file_info
+    {
+      string filename = 1;
+      uint64 word_counter = 2;
+    }
+    repeated file_info files = 2;
   };
   repeated root_info roots = 2;
 };

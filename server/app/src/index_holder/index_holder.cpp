@@ -133,7 +133,7 @@ get_files_result index_holder::get_files(const std::string& word) const
     spinlock spin;
     auto filler = [&](const auto& root) mutable
     {
-      auto files = root.get_filenames(word);
+      auto files = root.get_files_info(word);
       std::scoped_lock lock{spin};
       out.roots.emplace_back(root.get_original_root(), std::move(files));
     };
@@ -161,7 +161,7 @@ get_files_result index_holder::get_files(const std::string& word, const std::str
                    m_roots.end(),
                    [prepared_root = prepare_filepath(root)](const auto& current) { return current.is_equivalent(prepared_root); });
     if(iter != m_roots.end())
-      out.roots.emplace_back(root, iter->get_filenames(word));
+      out.roots.emplace_back(root, iter->get_files_info(word));
   };
   out.duration = benchmark(reader);
 

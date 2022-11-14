@@ -11,6 +11,7 @@ add_executable(${TARGET_NAME}
   grpc/converters/index_holder_results.h
   grpc/converters/index_holder_results.cpp
 
+  index_holder/file_info.h
   index_holder/filenames_storage.cpp
   index_holder/filenames_storage.h
   index_holder/index_holder.cpp

@@ -42,26 +42,26 @@ const std::string& root_index::get_original_root() const
   return m_original_root;
 }
 
-std::vector<std::string> root_index::get_filenames(const std::string& word) const
+std::vector<file_info> root_index::get_files_info(const std::string& word) const
 {
-  std::vector<std::string> out;
+  std::vector<file_info> out;
 
-  std::set<const filenames_storage::filename*> filenames;
-  if(boost::spirit::qi::parse(word.begin(), word.end(), m_symbols, filenames))
+  symbol_files files;
+  if(boost::spirit::qi::parse(word.begin(), word.end(), m_symbols, files))
   {
-    LOG_DEBUG("Found {} files with word '{}' in root {}.", filenames.size(), word, m_original_root);
+    LOG_DEBUG("Found {} files with word '{}' in root {}.", files.size(), word, m_original_root);
 
     spinlock spin;
-    auto filler = [&](const filenames_storage::filename* indices) mutable
+    auto filler = [&](const auto& info) mutable
     {
-      if(auto file = m_files.get_file(indices); file)
+      if(auto file = m_files.get_file(info.first); file)
       {
         std::scoped_lock lock{spin};
-        out.emplace_back(file->string());
+        out.emplace_back(file->string(), info.second);
       }
     };
-    out.reserve(filenames.size());
-    std::for_each(std::execution::par, filenames.begin(), filenames.end(), filler);
+    out.reserve(files.size());
+    std::for_each(std::execution::par, files.begin(), files.end(), filler);
   }
   else
     LOG_DEBUG("Didn't find files with word '{}' in root {}.", word, m_original_root);

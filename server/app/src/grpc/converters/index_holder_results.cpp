@@ -24,7 +24,14 @@ rpc::get_files_result to_grpc(const get_files_result& value)
   {
     auto* added = out.add_roots();
     added->set_root_path(root.root_path);
-    std::for_each(root.files.begin(), root.files.end(), [&](const auto& file){ added->add_files(file); });
+
+    auto file_info_adder = [&](const auto& file)
+    {
+      auto* file_info = added->add_files();
+      file_info->set_filename(file.filename);
+      file_info->set_word_counter(file.word_counter);
+    };
+    std::for_each(root.files.begin(), root.files.end(), file_info_adder);
   }
   fill_duration(out, value.duration);
   return out;

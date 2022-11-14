@@ -53,9 +53,12 @@ void root_index::creator::add_file(const std::filesystem::path& path)
     auto delim = std::find_if(word, file.cend(), is_not_alnum);
     std::unique_lock lock{m_symbols_mutex};
     if(auto found = m_symbols.find(std::string_view{word, delim}))
-      found->insert(get_filename_indices());
+    {
+      auto result = found->try_emplace(get_filename_indices(), 0);
+      result.first->second++;
+    }
     else
-      m_symbols.add(word, delim, {get_filename_indices()});
+      m_symbols.add(word, delim, symbol_files{{get_filename_indices(), 1}});
     lock.unlock();
 
     word = std::find_if(delim, file.cend(), is_alnum);

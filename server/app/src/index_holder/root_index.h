@@ -1,5 +1,6 @@
 #pragma once
 
+#include "app/src/index_holder/file_info.h"
 #include "app/src/index_holder/filenames_storage.h"
 
 #include <boost/spirit/include/qi_symbols.hpp>
@@ -23,12 +24,13 @@ public:
 
   [[nodiscard]] const std::string& get_original_root() const;
 
-  [[nodiscard]] std::vector<std::string> get_filenames(const std::string& word) const;
+  [[nodiscard]] std::vector<file_info> get_files_info(const std::string& word) const;
 
 private:
   template<typename Char, typename T>
   using boost_symbols = boost::spirit::qi::symbols<Char, T, boost::spirit::qi::tst_map<Char, T>>;
-  using symbols = boost_symbols<char, std::set<const filenames_storage::filename*>>;
+  using symbol_files = std::map<const filenames_storage::filename*, std::size_t>;
+  using symbols = boost_symbols<char, symbol_files>;
 
   class creator;
   root_index(creator&& creator_);

@@ -163,7 +163,7 @@ class IndexProcessor(ProcessorBase):
         if isinstance(response, GrpcError):
             print(response)
         else:
-            print(f"Finished in {response.duration.seconds // 60} minutes. {response.files} files indexed.")
+            print(f"Finished in {response.duration.seconds // 60} minute(s). {response.files} file(s) indexed.")
 
 
 class RootsProcessor(ProcessorBase):
@@ -208,7 +208,7 @@ class RootsProcessor(ProcessorBase):
         if isinstance(response, GrpcError):
             print(response)
         else:
-            print(f"Finished in {response.duration.seconds // 60} minutes.", end=' ')
+            print(f"Finished in {response.duration.seconds // 60} minute(s).", end=' ')
             if response.roots:
                 print("Available roots:")
                 [print('\t', root) for root in response.roots]
@@ -267,13 +267,14 @@ class GetProcessor(ProcessorBase):
         if isinstance(response, GrpcError):
             print(response)
         else:
-            total = sum([len(root.files) for root in response.roots])
-            print(f"Finished in {response.duration.seconds // 60} minutes. "
-                  f"{total} usages found{':' if total != 0 else '.'}")
+            total_words = sum([sum(file.word_counter for file in root.files) for root in response.roots])
+            total_files = sum([len(root.files) for root in response.roots])
+            print(f"Finished in {response.duration.seconds // 60} minute(s). "
+                  f"{total_words} usage(s) found{f' in {total_files} file(s):' if total_words != 0 else '.'}")
             for root in response.roots:
                 if root.files:
                     print(f"In root: {root.root_path}")
-                    [print('\t', file) for file in root.files]
+                    [print('\t', file.filename) for file in root.files]
 
 
 class RemoveProcessor(ProcessorBase):
@@ -320,7 +321,7 @@ class RemoveProcessor(ProcessorBase):
         if isinstance(response, GrpcError):
             print(response)
         else:
-            print(f"Finished in {response.duration.seconds // 60} minutes.")
+            print(f"Finished in {response.duration.seconds // 60} minute(s).")
 
 
 class ClearProcessor(ProcessorBase):
@@ -365,4 +366,4 @@ class ClearProcessor(ProcessorBase):
         if isinstance(response, GrpcError):
             print(response)
         else:
-            print(f"Finished in {response.duration.seconds // 60} minutes.")
+            print(f"Finished in {response.duration.seconds // 60} minute(s).")

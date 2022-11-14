@@ -1,8 +1,8 @@
 #pragma once
 
+#include "app/src/index_holder/file_info.h"
+
 #include <chrono>
-#include <map>
-#include <string>
 #include <vector>
 
 struct get_files_result
@@ -10,7 +10,7 @@ struct get_files_result
   struct root_info
   {
     std::string root_path;
-    std::vector<std::string> files;
+    std::vector<file_info> files;
   };
 
   std::vector<root_info> roots;
