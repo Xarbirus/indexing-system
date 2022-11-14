@@ -1,11 +1,7 @@
 #!/bin/sh
 
 SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
-
-WORK_DIR="$(
-  cd "$(dirname "$SCRIPT_PATH")" || exit 1
-  pwd -P
-)"
+WORK_DIR="$( cd "$(dirname "$SCRIPT_PATH")" || exit 1 ; pwd -P )"
 
 TESTS=0
 CONAN_PROFILE=""
@@ -68,7 +64,7 @@ if [ -n "$BUILD_TYPE" ]; then
   BUILD_DETAILS=$BUILD_DETAILS" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
   BUILD_DIR="$WORK_DIR/cmake-build-$BUILD_TYPE"
 else
-  echo "Build type is required! Exit."
+  echo "Correct build type is required! Exit."
   exit 1
 fi
 
@@ -90,7 +86,7 @@ if ! conan install "$WORK_DIR" "-if=""$BUILD_DIR" "-pr=""$CONAN_PROFILE"; then
   exit
 fi
 
-if ! cmake -G "Unix Makefiles" $BUILD_DETAILS -S "$WORK_DIR" -B "$BUILD_DIR" || ! make -C "$BUILD_DIR" -j4; then
+if ! cmake -G "Ninja" $BUILD_DETAILS -S "$WORK_DIR" -B "$BUILD_DIR" || ! ninja -C "$BUILD_DIR" -j4; then
   exit
 fi
 
@@ -100,3 +96,5 @@ if [ "$TESTS" = "1" ]; then
     $file
   done
 fi
+
+echo "cpp server built!"

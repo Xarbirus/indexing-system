@@ -1,11 +1,7 @@
 #!/bin/sh
 
 SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
-
-WORK_DIR="$(
-  cd "$(dirname "$SCRIPT_PATH")" || exit 1
-  pwd -P
-)"
+WORK_DIR="$( cd "$(dirname "$SCRIPT_PATH")" || exit 1 ; pwd -P )"
 
 PROTO_DIR="$WORK_DIR/proto"
 OUT_DIR="$WORK_DIR/pyclient/app/"
@@ -21,3 +17,5 @@ python3 -m grpc_tools.protoc \
 
 touch "$OUT_DIR/generated/__init__.py"
 touch "$OUT_DIR/generated/grpc/__init__.py"
+
+echo "python grpc generated!"
