@@ -17,7 +17,7 @@ usage() {
   exit 1
 }
 
-PARSED_ARGUMENTS=$(getopt -a -n "$(basename "$0")" -o tc:b:h --long tests,conan_profile,build_type:,help: -- "$@")
+PARSED_ARGUMENTS=$(getopt -a -n "$(basename "$0")" -o tc:b:h --long tests,conan_profile:,build_type:,help -- "$@")
 VALID_ARGUMENTS=$?
 if [ "$VALID_ARGUMENTS" != "0" ]; then
   usage
@@ -52,7 +52,7 @@ while [ : ]; do
     echo "Option requires an argument."
     usage
     ;;
-  -h)
+  -h | --help)
     usage
     ;;
   --)
