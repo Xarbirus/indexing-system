@@ -7,7 +7,7 @@ namespace logger::details
   void format_pattern::apply(spdlog::logger& logger)
   {
     auto formatter = std::make_unique<spdlog::pattern_formatter>();
-    formatter->add_flag<format_pattern>('*').set_pattern("%Y.%m.%d %H:%M:%S.%e [%t] %-7l:%* %v");
+    formatter->add_flag<format_pattern>('*').set_pattern("%Y.%m.%d %H:%M:%S.%e [%5t] %-7l:%* %v");
     logger.set_formatter(std::move(formatter));
   }
 
@@ -34,11 +34,10 @@ namespace logger::details
   std::string_view format_pattern::get_short_filename(std::string_view filename)
   {
 #ifdef _WIN32
-    const auto it = std::find_first_of(filename.rbegin(),
-                                       filename.rend(),
-                                       std::begin(spdlog::details::os::folder_seps),
-                                       std::end(spdlog::details::os::folder_seps) - 1);
-    return it != filename.rend() ? it.base() : filename;
+    auto end = filename.rfind("\\");
+    if(end != std::string::npos)
+       filename.remove_prefix(end + 1);
+    return filename;
 #else
     auto rv = std::strrchr(filename.data(), spdlog::details::os::folder_seps[0]);
     return rv != nullptr ? rv + 1 : filename;

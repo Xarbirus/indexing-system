@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 #include <fmt/format.h>
+
+#include <array>
 #include <random>
 
 #define CHECK(result, value)                                                     \
@@ -119,12 +121,12 @@ TEST(check_host_address, incorrect_localhost)
   std::random_device rand;
   std::default_random_engine engine(rand());
   std::uniform_int_distribution<std::size_t> get_number_of_chars(1, max_size);
-  std::uniform_int_distribution<std::size_t> get_index(97, 122);
+  std::uniform_int_distribution<int> get_index(97, 122);
 
   for(std::size_t test = 0; test < 1000; test++)
   {
     localhost.resize(get_number_of_chars(engine));
-    std::generate(localhost.begin(), localhost.end(), [&] { return get_index(engine); });
+    std::generate(localhost.begin(), localhost.end(), [&] { return static_cast<char>(get_index(engine)); });
 
     if(localhost != "localhost") [[likely]]
       CHECK(false, fmt::format("{}:8888", localhost));
@@ -152,7 +154,7 @@ TEST(check_host_address, incorrect_port)
   for(std::size_t test = 0; test < 1000; test++)
   {
     port.resize(get_number_of_chars(engine));
-    std::generate(port.begin(), port.end(), [&] { return get_index(engine); });
+    std::generate(port.begin(), port.end(), [&] { return static_cast<char>(get_index(engine)); });
     CHECK(false, fmt::format("localhost:{}", port));
     port.clear();
   }

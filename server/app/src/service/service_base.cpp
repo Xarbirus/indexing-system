@@ -2,6 +2,8 @@
 
 #include "logger/src/logger.h"
 
+#include <array>
+
 service_base::service_base()
   : m_signals{m_io}
 {
@@ -73,17 +75,22 @@ service_base::signal_handler service_base::get_interruption_handler()
 
 void service_base::init_default_signal_handlers()
 {
+#ifndef _WIN32
   constexpr std::array signal_numbers{SIGTTIN, SIGTTOU, SIGTSTP, SIGPIPE};
 
   const auto handler = SIG_IGN;
   for(const auto signal_number : signal_numbers)
     std::signal(signal_number, handler);
+#endif
 }
 
 void service_base::init_interruption_handlers()
 {
+#ifdef _WIN32
+  constexpr std::array signal_numbers{SIGTERM, SIGABRT, SIGILL, SIGSEGV, SIGINT};
+#else
   constexpr std::array signal_numbers{SIGTERM, SIGABRT, SIGILL, SIGSEGV, SIGBUS, SIGQUIT, SIGINT, SIGTSTP};
-
+#endif
   auto handler = get_interruption_handler();
   for(const auto signal_number : signal_numbers)
     set_signal_handler(signal_number, handler);

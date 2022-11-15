@@ -11,20 +11,24 @@
 #include "logger/src/logger.h"
 
 #include <execution>
+#include <memory>
 
 std::filesystem::path index_holder::prepare_filepath(std::string path)
 {
   if(path[0] == '~')
   {
     auto* home = std::getenv("HOME");
-    if(home or (home = std::getenv("USERPROFILE")))
-      path.replace(0, 1, home);
-    else
+    if(!home)
     {
-      constexpr auto message = "Can't find '~' in environment variables.";
-      LOG_WARNING(message);
-      throw std::runtime_error{fmt::format("{} Please, change the directory or set '~'.", message)};
+      home = std::getenv("USERPROFILE");
+      if(!home)
+      {
+        constexpr auto message = "Can't find '~' in environment variables.";
+        LOG_WARNING(message);
+        throw std::runtime_error{fmt::format("{} Please, change the directory or set '~'.", message)};
+      }
     }
+    path.replace(0, 1, home);
   }
   LOG_DEBUG("Get the path '{}' for processing.", path);
 
@@ -33,22 +37,22 @@ std::filesystem::path index_holder::prepare_filepath(std::string path)
   if(!exists(prepared_path))
   {
     constexpr auto message = "'{}' does not exist.";
-    LOG_WARNING(message, prepared_path.c_str());
-    throw std::runtime_error{fmt::format("{} Please, use an existing directory.", fmt::format(message, prepared_path.c_str()), message)};
+    LOG_WARNING(message, prepared_path.string());
+    throw std::runtime_error{fmt::format("{} Please, use an existing directory.", fmt::format(message, prepared_path.string()), message)};
   }
 
   if(!is_directory(prepared_path))
   {
     constexpr auto message = "'{}' is not a directory.";
-    LOG_WARNING(message, prepared_path.c_str());
-    throw std::runtime_error{fmt::format("{} Please, use a path to a directory.", fmt::format(message, prepared_path.c_str()), message)};
+    LOG_WARNING(message, prepared_path.string());
+    throw std::runtime_error{fmt::format("{} Please, use a path to a directory.", fmt::format(message, prepared_path.string()), message)};
   }
 
   if(!prepared_path.is_absolute())
   {
     constexpr auto message = "'{}' is not an absolute path.";
-    LOG_WARNING(message, prepared_path.c_str());
-    throw std::runtime_error{fmt::format("{} Please, use an absolute path.", fmt::format(message, prepared_path.c_str()), message)};
+    LOG_WARNING(message, prepared_path.string());
+    throw std::runtime_error{fmt::format("{} Please, use an absolute path.", fmt::format(message, prepared_path.string()), message)};
   }
 
   return prepared_path;

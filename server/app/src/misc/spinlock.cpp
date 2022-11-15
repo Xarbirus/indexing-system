@@ -1,5 +1,7 @@
 #include "app/src/misc/spinlock.h"
 
+#include <emmintrin.h>
+
 void spinlock::lock() noexcept
 {
   for(;;)
@@ -8,7 +10,7 @@ void spinlock::lock() noexcept
       return;
 
     while(m_lock.test(std::memory_order_relaxed))
-      __builtin_ia32_pause();
+      _mm_pause();
   }
 }
 

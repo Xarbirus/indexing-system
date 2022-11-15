@@ -2,7 +2,14 @@
 
 #include "grpc-helpers/src/grpc_call_processor.h"
 
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4127)
+#endif
 #include "generated/grpc/index.grpc.pb.h"
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 class engine;
 

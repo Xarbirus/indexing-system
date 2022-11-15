@@ -3,10 +3,18 @@
 #include "app/src/index_holder/file_info.h"
 #include "app/src/index_holder/filenames_storage.h"
 
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4459)
+#endif
 #include <boost/spirit/include/qi_symbols.hpp>
 #include <boost/spirit/home/qi/string/tst_map.hpp>
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 #include <filesystem>
+#include <map>
 #include <unordered_set>
 
 class task_dispatcher;

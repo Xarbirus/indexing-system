@@ -4,10 +4,17 @@
 
 #include "logger/src/logger.h"
 
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4127)
+#endif
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
+#if defined(_WIN32) && defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
-grpc_server::grpc_server(const std::string& address, engine& engine)
+index_grpc_server::index_grpc_server(const std::string& address, engine& engine)
   : m_builder{std::make_unique<grpc::ServerBuilder>()}
 {
   LOG_DEBUG("Creating grpc service.");
@@ -17,9 +24,9 @@ grpc_server::grpc_server(const std::string& address, engine& engine)
   LOG_INFO("Grpc server listens {}.", address);
 }
 
-grpc_server::~grpc_server() = default;
+index_grpc_server::~index_grpc_server() = default;
 
-void grpc_server::start()
+void index_grpc_server::start()
 {
   try
   {
@@ -42,7 +49,7 @@ void grpc_server::start()
   }
 }
 
-void grpc_server::stop()
+void index_grpc_server::stop()
 {
   try
   {

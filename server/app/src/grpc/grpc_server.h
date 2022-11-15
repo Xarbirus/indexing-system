@@ -14,11 +14,11 @@ namespace grpc
 
 class engine;
 
-class grpc_server
+class index_grpc_server
 {
 public:
-  grpc_server(const std::string& address, engine& engine);
-  ~grpc_server();
+  index_grpc_server(const std::string& address, engine& engine);
+  ~index_grpc_server();
 
   void start();
   void stop();

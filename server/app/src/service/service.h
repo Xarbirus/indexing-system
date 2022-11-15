@@ -24,5 +24,5 @@ private:
   index_holder m_index;
   engine m_engine;
   input_processor m_input;
-  grpc_server m_server;
+  index_grpc_server m_server;
 };

@@ -17,7 +17,13 @@ function(generate_grpc_source path_with_stem out)
     WORKING_DIRECTORY ${PROTOFILES_DIRECTORY}
     VERBATIM)
 
-  set_source_files_properties(${generated}
-    PROPERTIES
-      COMPILE_FLAGS "-Wno-conversion -Wno-sign-conversion -Wno-unused-parameter -Wno-missing-declarations -Wno-missing-field-initializers")
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set_source_files_properties(${generated}
+      PROPERTIES
+        COMPILE_FLAGS "/wd4127")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set_source_files_properties(${generated}
+      PROPERTIES
+        COMPILE_FLAGS "-Wno-conversion -Wno-sign-conversion -Wno-unused-parameter -Wno-missing-declarations -Wno-missing-field-initializers")
+  endif()
 endfunction()
