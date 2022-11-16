@@ -64,12 +64,14 @@ if [ -n "$BUILD_TYPE" ]; then
   BUILD_DETAILS=$BUILD_DETAILS" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
   BUILD_DIR="$WORK_DIR/cmake-build-$BUILD_TYPE"
 else
-  echo "Correct build type is required! Exit."
+  echo "Correct build type is required!"
+  usage
   exit 1
 fi
 
 if [ -z "$CONAN_PROFILE" ]; then
-  echo "Conan profile is required! Exit."
+  echo "Conan profile is required!"
+  usage
   exit 1
 fi
 
@@ -82,7 +84,7 @@ fi
 rm -rf $BUILD_DIR
 mkdir $BUILD_DIR
 
-if ! conan install "$WORK_DIR" "-if=""$BUILD_DIR" "-pr=""$CONAN_PROFILE"; then
+if ! conan install "$WORK_DIR" "-if=""$BUILD_DIR" "-pr=""$CONAN_PROFILE" --build missing; then
   exit
 fi
 
