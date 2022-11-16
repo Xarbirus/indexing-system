@@ -1,0 +1,38 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: ubuntu-build
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: install dependencies on ubuntu
+      run: |
+        sudo apt-get update
+        sudo apt-get install ninja-build cmake python3
+        ninja --version
+        cmake --version
+        gcc --version
+        python3 --version
+        
+    - name: update python
+      shell: bash
+      run: pip install -r ./requirements.txt
+      
+    - name: build server
+      working-directory: ./build
+      shell: bash
+      run: build-server.sh -c release -b release -t
+      
+      
