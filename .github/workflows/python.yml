@@ -1,0 +1,27 @@
+name: Python client CI
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    name: ubuntu-pyclient-build
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: install dependencies on ubuntu
+      run: |
+        sudo apt-get update
+        sudo apt-get install python3
+        python3 --version
+        
+    - name: update python
+      run: pip install -r ./requirements.txt
+      
+    - name: build client
+      working-directory: build
+      run: bash ./build-python-client.sh
