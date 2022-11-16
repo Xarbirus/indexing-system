@@ -15,6 +15,13 @@
 
 std::filesystem::path index_holder::prepare_filepath(std::string path)
 {
+  if(path.empty())
+  {
+    constexpr auto message = "Can't use empty path.";
+    LOG_WARNING(message);
+    throw std::runtime_error{fmt::format("{} Please, change the directory.", message)};
+  }
+
   if(path[0] == '~')
   {
     auto* home = std::getenv("HOME");
