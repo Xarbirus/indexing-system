@@ -1,0 +1,42 @@
+name: C++ server CI
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    name: ubuntu-server-build
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: install dependencies on ubuntu
+      run: |
+        sudo apt-get update
+        sudo apt-get install ninja-build cmake python3
+        ninja --version
+        cmake --version
+        gcc --version
+        python3 --version
+        
+    - name: update python
+      run: pip install -r ./requirements.txt
+      
+    - name: create conan profiles
+      run: |
+        conan profile new --detect release
+        conan profile update settings.compiler.libcxx=libstdc++11 release
+        conan profile new --detect debug
+        conan profile update settings.compiler.libcxx=libstdc++11 debug
+        conan profile update settings.build_type=Debug debug
+      
+    - name: build release server
+      working-directory: build
+      run: bash ./build-server.sh -c release -b release -t
+      
+    - name: build debug server
+      working-directory: build
+      run: bash ./build-server.sh -c debug -b debug -t
