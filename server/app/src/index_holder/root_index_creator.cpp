@@ -41,12 +41,16 @@ void root_index::creator::add_file(const std::filesystem::path& path)
     }
     return current_indices;
   };
+  const auto file = read_file(path);
 
   const auto locale = std::locale();
-  const auto is_alnum = [&](char c) { return std::isalnum(c, locale); };
-  const auto is_not_alnum = [&](char c) { return !std::isalnum(c, locale); };
+  const auto is_not_alnum = [&](char c)
+  {
+    static constexpr auto* punct = R"STR(\|/.,:;?!"()[]{}*#$%&'+-<=>@№^`~)STR";
+    return std::strchr(punct, c) != nullptr or std::isblank(c, locale) or std::isspace(c, locale);
+  };
+  const auto is_alnum = [&](char c) { return !is_not_alnum(c); };
 
-  const auto file = read_file(path);
   auto word = std::find_if(file.cbegin(), file.cend(), is_alnum);
   while(word != file.cend())
   {
