@@ -94,8 +94,16 @@ fi
 
 if [ "$TESTS" = "1" ]; then
   TESTS_DIR="$WORK_DIR/out/tests"
-  for file in "$TESTS_DIR"/*; do
-    $file
+  for test_file in "$TESTS_DIR"/*; do
+    echo $test_file
+    OUTPUT=$($test_file)
+    if [ `echo $OUTPUT | grep -c "FAILED" ` -gt 0 ]
+    then
+      echo $OUTPUT
+      exit 1
+    else
+      echo "Success"
+    fi
   done
 fi
 

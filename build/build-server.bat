@@ -1,5 +1,7 @@
 @echo off
 
+setlocal EnableDelayedExpansion
+
 set AVAILABLE_BUILDS=(debug, release, relwithdebinfo)
 
 set ARGC_MIN=2
@@ -59,9 +61,22 @@ ninja -C "%BUILD_DIR%" -j4
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%TESTS%" equ "1" (
-	for /f %%F in ('dir /s/b %WORK_DIR%\out\tests') do (
-		start "%%F" /b /wait %%F
+	set "TESTS_DIR=%WORK_DIR%\out\tests"
+	set "OUT_FILE=%TESTS_DIR%\out.txt"
+
+	for /f %%F in ('dir %TESTS_DIR%\*.exe /s/b ') do (
+		echo "%%F"
+		type NUL > "%OUT_FILE%"
+		start "%%F" /b /wait %%F >> "%OUT_FILE%"
+		findstr "FAILED" %OUT_FILE%>nul 2>&1
+		if !errorlevel!==0 (
+			type %OUT_FILE%
+			exit /b 1
+		) else (
+		    echo Success
+		)
 	)
+	DEL "%OUT_FILE%"
 )
 
 echo cpp server built!
