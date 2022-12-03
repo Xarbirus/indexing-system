@@ -39,7 +39,7 @@ std::filesystem::path index_holder::prepare_filepath(std::string path)
   }
   LOG_DEBUG("Get the path '{}' for processing.", path);
 
-  std::filesystem::path prepared_path{path};
+  std::filesystem::path prepared_path(std::move(path));
 
   if(!exists(prepared_path))
   {
