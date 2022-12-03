@@ -9,11 +9,10 @@ OUT_DIR="$WORK_DIR/pyclient/app/"
 pip3 install -q -r "$WORK_DIR/requirements.txt" || exit 1
 
 python3 -m grpc_tools.protoc \
-        --proto_path generated/grpc="$PROTO_DIR" \
         --python_out="$OUT_DIR" \
         --pyi_out="$OUT_DIR" \
         --grpc_python_out="$OUT_DIR" \
-        "$(find "$PROTO_DIR" -type f)" || exit 1
+        --proto_path generated/grpc="$PROTO_DIR" $(find "$PROTO_DIR" -type f) || exit 1
 
 touch "$OUT_DIR/generated/__init__.py"
 touch "$OUT_DIR/generated/grpc/__init__.py"
