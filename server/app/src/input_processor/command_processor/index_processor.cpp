@@ -20,7 +20,7 @@ void index_processor::execute(std::string_view arguments)
   const auto [path, suffix] = separate_first_word(arguments);
   if(!path.empty() and suffix.empty())
   {
-    const auto result = m_engine.add_root(path);
+    const auto result = m_engine.get().add_root(path);
     const auto duration = to_user_string(result.duration);
     print_to_user(fmt::format("Finished in {}. {} file(s) indexed.", duration, result.files));
     LOG_INFO("Indexed {} file(s) in '{}' ({}).", result.files, path, duration);

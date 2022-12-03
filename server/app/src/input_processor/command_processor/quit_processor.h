@@ -15,5 +15,5 @@ public:
   [[nodiscard]] std::string_view get_description() const noexcept override;
 
 private:
-  engine& m_engine;
+  std::reference_wrapper<engine> m_engine;
 };

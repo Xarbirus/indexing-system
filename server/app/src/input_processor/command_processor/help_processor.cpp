@@ -11,12 +11,12 @@ help_processor::help_processor(std::string _command, const std::map<std::string,
 void help_processor::execute(std::string_view arguments)
 {
   const auto [command_to_help, _] = separate_first_word(arguments);
-  if(auto it = m_commands.find(command_to_help); it != m_commands.end())
+  if(auto it = m_commands.get().find(command_to_help); it != m_commands.get().end())
     print_to_user(it->second->get_description());
   else
   {
     print_to_user("Available commands:");
-    for(const auto& _command : m_commands)
+    for(const auto& _command : m_commands.get())
       print_to_user('\t', _command.first, '\t', _command.second->get_description());
   };
 }

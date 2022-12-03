@@ -18,7 +18,7 @@ void remove_processor::execute(std::string_view arguments)
   const auto [path, suffix] = separate_first_word(arguments);
   if(!path.empty() and suffix.empty())
   {
-    const auto result = m_engine.remove_root(path);
+    const auto result = m_engine.get().remove_root(path);
     const auto duration = to_user_string(result.duration);
     print_to_user(fmt::format("Finished in {}.", duration));
     LOG_INFO("Removed '{}' ({}).", path, duration);

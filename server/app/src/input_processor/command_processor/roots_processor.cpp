@@ -20,7 +20,7 @@ void roots_processor::execute(std::string_view arguments)
     return;
   }
 
-  const auto result = m_engine.get_roots();
+  const auto result = m_engine.get().get_roots();
   const auto duration = to_user_string(result.duration);
   print_to_user(fmt::format("Finished in {}.", duration));
   print_to_user("Available roots:");

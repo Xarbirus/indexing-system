@@ -16,7 +16,7 @@ public:
   [[nodiscard]] std::string_view get_description() const noexcept override;
 
 private:
-  const std::map<std::string, std::unique_ptr<command_processor>>& m_commands;
+  std::reference_wrapper<const std::map<std::string, std::unique_ptr<command_processor>>> m_commands;
 
   static constexpr auto description =
     "Use 'help' to see a list of commands. "

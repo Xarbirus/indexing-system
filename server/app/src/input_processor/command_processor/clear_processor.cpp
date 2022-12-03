@@ -20,7 +20,7 @@ void clear_processor::execute(std::string_view arguments)
     return;
   }
 
-  const auto result = m_engine.clear_roots();
+  const auto result = m_engine.get().clear_roots();
   const auto duration = to_user_string(result.duration);
   print_to_user(fmt::format("Finished in {}.", duration));
   LOG_INFO("Index was cleared ({}).", duration);
