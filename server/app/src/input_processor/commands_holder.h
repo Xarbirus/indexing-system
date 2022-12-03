@@ -12,7 +12,7 @@ class commands_holder
 public:
   explicit commands_holder(engine& engine);
 
-  void execute(const std::string& command, const std::string& arguments);
+  void execute(const std::string& command, std::string_view arguments);
 
 private:
   template<typename Processor, typename... Args>

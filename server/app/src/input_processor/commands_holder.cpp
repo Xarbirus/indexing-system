@@ -17,7 +17,7 @@ commands_holder::commands_holder(engine& engine)
   add<roots_processor>("roots", engine);
 }
 
-void commands_holder::execute(const std::string& command, const std::string& arguments)
+void commands_holder::execute(const std::string& command, std::string_view arguments)
 {
   if(auto it = m_commands.find(command); it != m_commands.end())
     it->second->execute(arguments);
