@@ -24,8 +24,6 @@ class root_index
 public:
   static root_index create(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string);
 
-  root_index(root_index&& other) noexcept;
-
   [[nodiscard]] std::size_t get_number_of_files() const noexcept;
 
   [[nodiscard]] bool is_equivalent(const std::filesystem::path& root) const;
