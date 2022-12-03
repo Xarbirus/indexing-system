@@ -12,7 +12,7 @@ public:
 
   void execute(std::string_view arguments) override;
 
-  [[nodiscard]] std::string_view get_description() const override;
+  [[nodiscard]] std::string_view get_description() const noexcept override;
 
 private:
   engine& m_engine;

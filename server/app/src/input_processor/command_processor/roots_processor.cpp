@@ -29,7 +29,7 @@ void roots_processor::execute(std::string_view arguments)
   LOG_INFO("Find {} roots ({}).", result.roots.size(), duration);
 }
 
-std::string_view roots_processor::get_description() const
+std::string_view roots_processor::get_description() const noexcept
 {
   return description;
 }

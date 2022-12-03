@@ -19,7 +19,7 @@ void quit_processor::execute(std::string_view arguments)
   m_engine.stop_service();
 }
 
-std::string_view quit_processor::get_description() const
+std::string_view quit_processor::get_description() const noexcept
 {
   return description;
 }

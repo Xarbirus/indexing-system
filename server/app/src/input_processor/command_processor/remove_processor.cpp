@@ -27,7 +27,7 @@ void remove_processor::execute(std::string_view arguments)
     print_to_user(description);
 }
 
-std::string_view remove_processor::get_description() const
+std::string_view remove_processor::get_description() const noexcept
 {
   return description;
 }

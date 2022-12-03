@@ -9,4 +9,3 @@ struct command_info
   std::string command;
   std::string description;
 };
-

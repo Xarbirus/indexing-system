@@ -9,5 +9,5 @@ public:
 
   virtual void execute(std::string_view) = 0;
 
-  [[nodiscard]] virtual std::string_view get_description() const = 0;
+  [[nodiscard]] virtual std::string_view get_description() const noexcept = 0;
 };

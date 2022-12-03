@@ -29,7 +29,7 @@ void index_processor::execute(std::string_view arguments)
     print_to_user(description);
 }
 
-std::string_view index_processor::get_description() const
+std::string_view index_processor::get_description() const noexcept
 {
   return description;
 }

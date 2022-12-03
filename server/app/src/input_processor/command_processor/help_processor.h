@@ -13,7 +13,7 @@ public:
 
   void execute(std::string_view arguments) override;
 
-  [[nodiscard]] std::string_view get_description() const override;
+  [[nodiscard]] std::string_view get_description() const noexcept override;
 
 private:
   const std::map<std::string, std::unique_ptr<command_processor>>& m_commands;

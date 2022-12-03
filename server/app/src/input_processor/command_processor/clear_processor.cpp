@@ -26,7 +26,7 @@ void clear_processor::execute(std::string_view arguments)
   LOG_INFO("Index was cleared ({}).", duration);
 }
 
-std::string_view clear_processor::get_description() const
+std::string_view clear_processor::get_description() const noexcept
 {
   return description;
 }
