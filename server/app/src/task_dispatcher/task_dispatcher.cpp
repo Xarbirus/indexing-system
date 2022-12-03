@@ -7,6 +7,7 @@ task_dispatcher::task_dispatcher(std::size_t thread_count)
 {
   LOG_INFO("Starting task dispatcher.");
 
+  m_workers.reserve(thread_count);
   for(std::size_t i = 0; i < thread_count; ++i)
     m_workers.emplace_back([this] { do_work(); });
   LOG_DEBUG("Task dispatcher uses {} threads.", thread_count);
