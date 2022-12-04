@@ -8,6 +8,7 @@ root_index::creator::creator(task_dispatcher& dispatcher, const std::filesystem:
   : m_dispatcher{dispatcher}
   , m_root{root}
   , m_original_root{root_string}
+  , m_current_locale{std::locale()}
 {
   add_directory(m_root);
   for(const auto& status : m_statuses)
@@ -31,8 +32,7 @@ std::string root_index::creator::read_file(const std::filesystem::path& path)
 
 void root_index::creator::add_file(const std::filesystem::path& path)
 {
-  const filenames_storage::filename* current_indices = nullptr;
-  auto get_filename_indices = [&]() mutable
+  auto get_filename_indices = [&, current_indices = static_cast<const filenames_storage::filename*>(nullptr)]() mutable
   {
     if(current_indices == nullptr) [[unlikely]]
     {
@@ -41,13 +41,13 @@ void root_index::creator::add_file(const std::filesystem::path& path)
     }
     return current_indices;
   };
+
   const auto file = read_file(path);
 
-  const auto locale = std::locale();
   const auto is_not_alnum = [&](char c)
   {
     static constexpr auto* punct = R"STR(\|/.,:;?!"()[]{}*#$%&'+-<=>@№^`~)STR";
-    return std::strchr(punct, c) != nullptr or std::isblank(c, locale) or std::isspace(c, locale);
+    return std::strchr(punct, c) != nullptr or std::isblank(c, m_current_locale) or std::isspace(c, m_current_locale);
   };
   const auto is_alnum = [&](char c) { return !is_not_alnum(c); };
 

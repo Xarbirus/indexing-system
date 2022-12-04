@@ -34,4 +34,6 @@ private:
 
   filenames_storage m_files;
   symbols m_symbols;
+
+  std::locale m_current_locale;
 };
