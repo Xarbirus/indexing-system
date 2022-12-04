@@ -15,6 +15,8 @@ class index_holder
 public:
   explicit index_holder(task_dispatcher& dispatcher);
 
+  void stop();
+
   add_root_result add_root(const std::string& root);
   remove_root_result remove_root(const std::string& root);
 
@@ -31,4 +33,7 @@ private:
 
   mutable std::shared_mutex m_mutex;
   std::list<root_index> m_roots;
+
+  std::atomic_bool m_stop{false};
+  mutable std::shared_mutex m_request_started;
 };

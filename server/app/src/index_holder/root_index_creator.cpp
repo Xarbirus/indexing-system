@@ -4,8 +4,9 @@
 
 #include <fstream>
 
-root_index::creator::creator(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string)
-  : m_dispatcher{dispatcher}
+root_index::creator::creator(std::atomic_bool& stop_flag, task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string)
+  : m_stop_flag{stop_flag}
+  , m_dispatcher{dispatcher}
   , m_root{root}
   , m_original_root{root_string}
   , m_current_locale{std::locale()}
@@ -73,6 +74,9 @@ void root_index::creator::add_directory(const std::filesystem::path& path)
 {
   for(const auto& dir_entry : std::filesystem::directory_iterator(path))
   {
+    if(m_stop_flag.load(std::memory_order_acquire))
+      break;
+
     if(is_directory(dir_entry) and !is_empty(dir_entry))
     {
       auto task = [&, dir_entry]() { add_directory(dir_entry); };

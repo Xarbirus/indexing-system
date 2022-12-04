@@ -17,6 +17,7 @@ void service::initialize()
 
 void service::finalize()
 {
+  m_index.stop();
   m_input.stop();
   m_server.stop();
 }

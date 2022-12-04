@@ -22,7 +22,7 @@ class task_dispatcher;
 class root_index
 {
 public:
-  static root_index create(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string);
+  static root_index create(std::atomic_bool& stop_flag, task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string);
 
   [[nodiscard]] std::size_t get_number_of_files() const noexcept;
 

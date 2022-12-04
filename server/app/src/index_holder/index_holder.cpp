@@ -13,6 +13,11 @@
 #include <execution>
 #include <memory>
 
+#define ADD_WAITER                                  \
+  if(m_stop.load(std::memory_order_acquire))        \
+    throw std::runtime_error{"Service is stopped."}; \
+  std::shared_lock lock{m_request_started};
+
 std::filesystem::path index_holder::prepare_filepath(std::string path)
 {
   if(path.empty())
@@ -69,8 +74,17 @@ index_holder::index_holder(task_dispatcher& dispatcher)
   : m_dispatcher{dispatcher}
 {}
 
+void index_holder::stop()
+{
+  m_stop.store(true, std::memory_order_release);
+
+  std::scoped_lock waiter{m_request_started};
+}
+
 add_root_result index_holder::add_root(const std::string& root)
 {
+  ADD_WAITER;
+
   LOG_INFO("Adding root '{}'.", root);
 
   add_root_result out;
@@ -78,7 +92,7 @@ add_root_result index_holder::add_root(const std::string& root)
   auto adder = [&]()
   {
     auto prepared_root = prepare_filepath(root);
-    auto temp = root_index::create(m_dispatcher, prepared_root, root);
+    auto temp = root_index::create(m_stop, m_dispatcher, prepared_root, root);
 
     std::scoped_lock lock{m_mutex};
     m_roots.remove_if([&](const auto& current) { return current.is_equivalent(prepared_root); });
@@ -91,6 +105,8 @@ add_root_result index_holder::add_root(const std::string& root)
 
 remove_root_result index_holder::remove_root(const std::string& root)
 {
+  ADD_WAITER;
+
   LOG_INFO("Removing root '{}'.", root);
 
   auto remover = [&]()
@@ -103,6 +119,8 @@ remove_root_result index_holder::remove_root(const std::string& root)
 
 get_roots_result index_holder::get_roots() const
 {
+  ADD_WAITER;
+
   LOG_INFO("Getting all roots.");
 
   get_roots_result out;
@@ -123,6 +141,8 @@ get_roots_result index_holder::get_roots() const
 
 remove_root_result index_holder::clear_roots()
 {
+  ADD_WAITER;
+
   LOG_INFO("Removing all roots.");
 
   auto remover = [&]()
@@ -135,6 +155,8 @@ remove_root_result index_holder::clear_roots()
 
 get_files_result index_holder::get_files(const std::string& word) const
 {
+  ADD_WAITER;
+
   LOG_INFO("Getting files with '{}'.", word);
 
   get_files_result out;
@@ -160,6 +182,8 @@ get_files_result index_holder::get_files(const std::string& word) const
 
 get_files_result index_holder::get_files(const std::string& word, const std::string& root) const
 {
+  ADD_WAITER;
+
   LOG_INFO("Getting files with '{}' in root '{}'.", word, root);
 
   get_files_result out;

@@ -7,9 +7,9 @@
 
 #include <execution>
 
-root_index root_index::create(task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string)
+root_index root_index::create(std::atomic_bool& stop_flag, task_dispatcher& dispatcher, const std::filesystem::path& root, const std::string& root_string)
 {
-  return root_index::creator{dispatcher, root, root_string};
+  return root_index::creator{stop_flag, dispatcher, root, root_string};
 }
 
 root_index::root_index(creator&& creator_)
