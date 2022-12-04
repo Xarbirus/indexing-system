@@ -2,8 +2,7 @@
 
 #include "logger/src/logger.h"
 
-task_dispatcher::task_dispatcher(std::size_t thread_count)
-  : m_work(m_io.get_executor())
+void task_dispatcher::start(std::size_t thread_count)
 {
   LOG_INFO("Starting task dispatcher.");
 
@@ -13,7 +12,7 @@ task_dispatcher::task_dispatcher(std::size_t thread_count)
   LOG_DEBUG("Task dispatcher uses {} threads.", thread_count);
 }
 
-task_dispatcher::~task_dispatcher()
+void task_dispatcher::stop()
 {
   try
   {
