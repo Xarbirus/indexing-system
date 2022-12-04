@@ -16,7 +16,7 @@ void input_processor::start()
 {
   print_to_user("Service started.");
 
-  auto user_input = [&]
+  auto user_input = [&commands=m_commands]
   {
     std::string line;
     while(std::getline(std::cin, line))
@@ -25,7 +25,7 @@ void input_processor::start()
       {
         LOG_DEBUG("Input processor gets line '{}'.", line);
         const auto [command, arguments] = prepare_command(line);
-        m_commands.execute(command, arguments);
+        commands.execute(command, arguments);
       }
       catch(const std::exception& ex)
       {
@@ -38,14 +38,12 @@ void input_processor::start()
         LOG_ERROR("Input processor caught an unknown exception, resuming.");
       }
     }
-
-    LOG_INFO("Input processor ended.");
   };
   std::thread(user_input).detach();
 }
 
 void input_processor::stop()
 {
-  print_to_user("Service stopped.");
   std::cin.setstate(std::ios_base::eofbit);
+  print_to_user("Input processor ended.");
 }
